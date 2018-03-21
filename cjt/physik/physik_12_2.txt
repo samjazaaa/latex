@@ -1,0 +1,140 @@
+Physik 12/2
+
+ 
+4.1 Physikalische Eigenschaften
+	Größenbestimmung durch Projektion und Zeitmessung der Verschiebung ? Winkel
+	m˜2·?10?^30 kg; (?_Sonne ) ¯=1,41 g/?cm?^3 
+	V_Sonne˜?1.300.000·V?_Erde
+	Differentielle Rotation
+	Äquator: T_syn=27,275 d
+T_sid=25,380 d
+	70°: T_sid=33 d
+	g_Sonne˜28·g_Erde
+4.2 Spektren und Strahlungsgesetze
+	Welle
+	c=?·f
+	Beugung, Interferenz, Polarisation
+	Teilchen
+	E_?=h·f
+	p_?=h/?  
+	Photoeffekt, Comptoneffekt
+	Welle-Teilchen-Dualismus
+	Kleine Wellenlänge ? Teilchencharakter
+	Große Wellenlänge ? Wellencharakter
+	Emissionsspektren
+	Kontinuierliches Spektrum:
+Gase unter hohem Druck ? Temperatur
+	Linienspektrum: angeregte Atome
+? Art, Anteil der Atome, Magnetfeld, Temperatur
+	Bandenspektrum: angeregte Moleküle
+	Wasserstoff Ionisierungsenergie
+E_n=-13,6 eV·1/n^2 
+	Übergänge Eindeutig (Lyman, Balmer,… )
+	E_Ha=E_3-E_2=1,89 eV? ?=656 nm
+	Schwarzer Körper
+	Absorbiert jede auftreffende Strahlung
+	Je größer die Temperatur desto ausgeprägter das Maximum und desto kleiner die entsprechende Wellenlänge
+	Verschiebungsgesetz (Wien)
+?_max·T=2,898·?10?^(-3) m·K=b
+	Stefan-Boltzmann-Gesetz
+F=s·A·T^4
+	E(?,T)=(2c^2·h)/(?^5·(e^(hc/k?T)-1))
+4.3 Aufbau der Sonne
+	Wien
+	Messung im Weltraum:
+?_max=475?T_Wien=6100 K
+	Solarkonstante ( E / Sekunde und m²)
+S=1360 W/m²
+	Oberflächentemperatur (Hohlkugel)
+	L_Sonne=S·4p·(1AE)²
+	T_eff=?(L_Sonne/(s·4p·R_S^2 ))=5800 K
+	? nur näherungsweise „Schwarzer Strahler“
+	(E_kin ) ¯=0,78 eV<13,6 eV Ionisierung
+	?m=E/c²=4,3·?10?^9  kg // pro sec.
+	Inneres der Sonne: “Plasma” aus Elektronen, Protonen und Heliumkernen
+	Einheitliches Sonnenteilchen: Durchschnitt Masse Elektron + Proton: 0,84·?10?^(-27)  kg
+	? Teilchenzahl = 2,4·?10?^57
+	Druckbestimmung durch Modell zweier Halbkugeln; p_zentral>2·?10?^16  Pa
+	? Temperatur im Inneren durch p, N und V
+? T_zentral=15·?10?^6  K
+? Teilchen vollständig ionisiert
+ 
+4.4 Energieerzeugung und Energietransport
+	Weder durch Verbrennung noch durch Gravitation
+	Für Kernfusion kinetische Energie EIGENTLICH zu klein aber einige durch Maxwellsche Geschwindigkeitsverteilung + Tunneleffekt
+	pp-Kette (5·?10?^6  K)
+
+
+
+
+
+
+
+	CNO-Zyklus (10·?10?^6  K) (20) 
+
+
+
+
+
+
+
+	Vorrat: Hälfte der Sonnenteilchen Protonen, davon 10% ? 10 Mrd a
+	Wärmetransport
+	(Wärmeleitung)
+	Wärmestrahlung bis 0,85 x Rs
+	Konvektion „außen“
+4.5 Ruhige Sonne
+	Scharfer Rand, Randverdunkelung, Granulation
+	Photosphäre
+	~ 300 km dick
+	Helligkeitsabfall (v.a. kurzwellig)
+	Randverdunkelung durch Einblicktiefe ? höhere kältere Schichten
+	Granulation
+	~ 1000 km Durchmesser
+	Mitte ~ 300 K heißer
+	Kurzlebig
+	Spektrum
+	Photosphäre: geringer Druck
+? Linienspektrum?
+	Aber freie Elektronen mit unterschiedlichen kinetischen Energien die von H-Atomen eingefangen werden
+? kontinuierliches Spektrum
+	Chromosphäre
+	~ 10.000 km dick
+	„Flash-Spektrum“ (Linien)
+	6.000K – 10.000 K
+	Korona
+	> Vielfache von Rs dick
+	T > 1.000.000 K
+	Photosphäre schwingt 5-minütig als stehende Welle
+4.6 Aktive Sonne
+	Sonnenflecken
+	Zu- und Abnahme in
+ca. 11-jährigem Zyklus
+	Entstehung symmetrisch zum Äquator; von außen nach innen
+	Gruppen halten länger als Einzelne
+	Umbra
+	Helligkeit 1/10
+	T = 3.400 K
+	Zeeman-Effekt: Spektrallinien spalten sich im Magnetfeld in 2 oder 3 Linien auf
+	Fleckengruppen magnetisch bipolar
+	Differentielle Rotation der Sonne bewirkt Aufwicklung der Magnetfeldlinien
+	Entstehung
+	Mag. Feld erzeugt Druck
+	? Verminderung Gasdruck
+	? Magnetfeld und Plasma können austreten
+	Sonnenfackeln
+	Aufhellung in Aktivitätsregion
+	Langlebiger
+	Magnetfeld stärker als Umgebung
+	Flares entstehen in der Nähe von Flecken durch Kurzschluss von Magnetfeldlinien
+? gewaltige Energiefreisetzung
+4.7 Terrestrische Wirkungen
+	Erde im Strahlungsgleichgewicht
+? Durchschnittstemperatur -20°C
+? Unterschied durch Treibhauseffekt
+	Temperaturverlauf an Sonnenflecken gekoppelt
+	Sonnenwind
+	Protonen, Elektronen und alpha-Teilchen als Plasma
+	Verantwortlich für Polarlichter und Krümmung der Kometenschweife
+	Röntgenstrahlung
+	Verformung des Erdmagnetfeldes auf Sonnenabgewandter Seite

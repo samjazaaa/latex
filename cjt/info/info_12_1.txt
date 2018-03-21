@@ -1,0 +1,61 @@
+Informatik 12/1
+1. Formale Sprachen
+	Zeichenkette: Wort
+	Syntax <-> Semantik
+	Produktionsregeln
+	Beispiel:
+(1) <Wetter> ? <Temperatur><Temperatur>-<Windrichtung>
+(2) <Temperatur> ? -<Zahl>°C | <Zahl>°C
+[…]
+(13) <Ziffer> ? 1|2|3|4|e (leeres Wort)
+	Syntaktische Variablen (nicht terminale) <-> Terminale (Enthalten in S)
+	Ableitung durch Ableitungsbaum
+
+
+
+
+
+
+	Grammatik   G=(V,S,P,S)
+	Syntaktische Variablen: V={<Wetter>,<Temperatur>,<Wetterlage>,…}
+	Alphabet: S={A,B,C,D,0,1,2,…}
+	Produktionsregeln: P (s.o.)
+	Startsymbol: S= <Wetter>
+	Erweiterte Backus-Naur-Form (EBNF)
+	Terminale mit Hochkommas
+	Nicht-Terminale ohne spitze Klammern
+	Regeln enden mit ;
+	= statt ?
+	[Optionales]
+	{Weglassen oder wiederholen}
+	ac | bc ? (a|b) c
+	Bsp.:
+Zahl = [‘-‘] ZifferNicht0 {Ziffer} | ‘0‘;
+	Syntaxdiagramm:
+ 
+	Erkennung formaler Sprachen durch endliche Automaten:
+
+
+
+
+
+
+	Implementierung
+	Methode der das zu prüfende Wort übergeben wird
+	In dieser Wort Buchstabe für Buchstabe durchgehen (for-Schleife) und bei jedem Durchgang „zustandWechseln(character c)“ mit dem Buchstaben an der Stelle aufrufen
+	Diese überprüft abhängig vom aktuellen Zustand Bedingungen und wechselt demnach den aktuellen Zustand
+	Wenn am Ende ein Endzustand ausgewählt ist ? Wort
+2. Kommunikation und Synchronisation von Prozessen
+	Protokoll: Beschreibung eines Kommunikationsvorgangs (Benötigt Datenformat durch formale Sprache und zeitlichen Ablauf)
+	Nebenläufigkeit:
+	Ergebnis eines anderen Prozesses benötigt ? abhängig
+	Ansonsten nebenläufig
+	Gemeinsame Ressource ? kritischer Abschnitt
+	Wechselseitiger Ausschluss und Unterbrechungen
+	Wenn eine Ressource erst nach Abschluss des kritischen Abschnitts entzogen werden kann ? ununterbrechbare Ressource
+	Erzeuger-Verbraucher-Systeme
+	A lagert in Pufferspeicher während B entnimmt
+	Zu schnelle Produktion ? Überlaufsituation
+	Zu langsam ? warten
+	Verklemmung
+	Verursacht durch nicht ausreichende Steuerung der Verteilung von Ressourcen

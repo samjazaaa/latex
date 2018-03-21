@@ -1,0 +1,29 @@
+Informatik 11/2
+
+Bäume
+	Wurzel ? Kanten ? innere Knoten […] ? Blätter
+	Ordnungen
+	Preorder (Prefix): W – L – R
+	Inorder (Infix): L – W – R
+	Postorder (Postfix): L – R – W (polnisch)
+	Geordnet: links kleinere, rechts größere gemäß Ordnungsrelation
+	Suchen
+	Baum gibt weiter an Wurzel
+	Knoten vergleichen mit sich selbst, ob kleiner und ordnen entsprechend zu („istKleiner“, „istGleich“)
+	Abschluss null
+	s1.compareTo(s2) ? negativ falls s1 vor s2, 0 bei Gleichheit
+	in Ebene n des Baums passen 2^(n-1) Daten, Restbaum hat dann 2^(n-1)-1
+	? insgesamt  2·2^(n-1)-1= 2^n-1  Daten
+	Liste zu Baum:
+	Wenn Liste nicht leer:
+	Rechter Teilbaum = zu Baum gewandelte rechte Teilliste
+	Letztes Element der verbleibenden linken Liste zu Inhalt des aktuellen Knotens
+	Linke Listenhälfte zu Baum zu linkem Teilbaum
+	Sortiert einfügen: wenn kleiner links = links.einfuegen(dat) usw.
+Graphen
+	Keine Hierarchische Struktur
+	Kanten: gerichtet <-> ungerichtet
+	Bsp.: verlinkte Dokumente, Wanderkarte, Zugnetze, Datenflussdiagramme
+	Zusammenhängend: jeder Knoten kann von jeden über Pfad aus Kanten erreicht werden
+	Darstellung von Graphen: Adjazenzmatrix (Zeilen = Spalten = Knoten) ungerichtet ? symmetrisch
+

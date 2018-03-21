@@ -1,0 +1,120 @@
+Psychologie 11/1
+
+ 
+1. Alltags- / Wissenschaftliche Psychologie
+•	Definition
+-	Erfassen, Beschreiben, Erklären, Verstehen, Vorhersagen und Ermöglichen von Veränderungen (unter Berücksichtigung des Hintergrunds biologischer, sozialer und soziokulturellen Bedingungen) von:
+?	Erleben (subjektive Selbstbeobachtung; Bsp.: Angst, Hunger)
+?	Verhalten (komplexe Abläufe; Bsp.: Auto fahren)
+?	Handeln (zielgerichtete und beabsichtigte Vorgänge; Bsp.: Lernen)
+•	Merkmale „wissenschaftlich“
+-	Überprüfbar und wiederholbar
+-	Allgemein gültig
+-	Objektiv
+-	Systematisch durch wissenschaftliche Methoden
+2. Wissenschaftliche Methoden der Psychologie
+•	Definition
+-	Systematische Vorgehensweisen ? Wissen über Objektbereich
+-	Empirische Methoden
+-	Ursache-Wirkungs-Zusammenhänge ? Voraussagen und Veränderungen
+•	Kriterien wissenschaftlichen Vorgehens
+-	Validität (Untersucht tatsächlich das, was angegeben)
+-	Reliabilität (genau und exakt)
+-	Objektivität (unabhängig von der Person)
+-	Klare und Präzise Hypothese
+-	Zurückführung auf das Beobachtbare: Operationalisierung
+-	Population bzw. Grundgesamtheit erklärt durch repräsentative Stichprobe
+•	Methoden der Psychologie
+-	Beobachtung (Selbst-, Fremdbeobachtung; (un)systematisch)
+-	Test (Leistungs-, Reife-, Persönlichkeitstest)
+-	Befragung (geschlossene/offene Fragen)
+-	Experiment (bestimmter Vorgang ? Beobachtung)
+
+•	Umgang mit Störquellen
+-	Mögliche Fehlerquellen
+?	Kulturelle Verzerrungen
+?	Technische Fehler
+?	Soziale Erwünschtheit
+?	Situative Faktoren (je nach Situation)
+3. Wahrnehmung
+•	Definition
+-	Aufnahme und Verarbeitung von Reizen
+-	Objektwahrnehmung <-> soziale Wahrnehmung
+-	Grundlegende Prozesse der Wahrnehmung
+?	Sensorische Prozesse (Reizaufnahme, Umwandlung und Weiterleitung)
+?	Wahrnehmung im engeren Sinn (Verarbeitung und Ordnung ? Abbild)
+?	Klassifikation des Wahrgenommenen (Interpretation durch Vergleich mit Wissen)
+-	Erfahrung ? Reize in bestimmtem Kontext („top-down“ Prozesse)
+-	Individuelle Faktoren
+?	Beschaffenheit Sinnesorgane
+?	Aufmerksamkeit
+?	Persönlichkeitsmerkmale
+-	Faktoren des Reizes
+?	Deutlichkeit
+?	Präsenz
+?	Intensität
+?	Dauer
+-	Soziale Faktoren
+?	Wert- und Normvorstellungen
+?	Andere Personen(gruppen)
+?	Gewohnheit
+?	Umgebung
+-	Fazit: aktiver und selektiver Prozess; konstruktiv und interpretierend; von zahlreichen Faktoren abhängig
+•	Personenwahrnehmung
+-	Primäreffekt (primacy effect)
+-	Rezenzeffekt (recency effect)
+-	Soziale Stereotypen
+-	Halo-Effect
+-	Kontrastfehler
+-	Logischer Fehler
+•	Objektwahrnehmung
+-	„mehr als die Summe der Teile“
+-	Gestaltgesetze
+?	Figur-Grund-Prinzip
+?	Gesetz der Nähe
+?	Gesetz der Ähnlichkeit
+?	Gesetz der Geschlossenheit
+?	Gesetz der guten Gestalt (Prägnanzgesetz)
+?	Erfahrungsgesetz
+(4. Intelligenz)
+5. Kommunikation
+•	Definition
+-	Sender ? Botschaft ? Empfänger
+-	Soziale Kommunikation
+?	Vermittlung, Aufnahme und Austausch von Informationen zw. 2 oder mehr Personen
+?	Wechselseitiger Ablauf
+-	Kommunikationsarten
+?	Verbale Kommunikation
+?	Nonverbale Kommunikation
+?	Paraverbale Kommunikation
+-	? Kongruenz / Inkongruenz (Kommunikationsstörung)
+•	Regelkreis der Kommunikation
+-	Sender ? Absicht ? Kodierung ? Übermittlung: Medium, Kanal, Mittel ? Dekodierung ? Empfänger
+6. Kommunikationsmodelle
+•	Kommunikationsquadrat von Friedemann Schulz von Thun
+-	Aussage vier Botschaften:
+?	Sachinhalt
+?	Selbstoffenbarung
+?	Beziehung
+?	Appell
+-	Entsprechende „Ohren“
+-	Mögliche Fehler
+?	Empfänger beherrscht nicht alle vier Seiten
+?	Ohren unterschiedlich groß bzw. taub
+?	Empfänger hört auf anderer Ebene als von Sender beabsichtigt
+
+
+
+
+•	Axiome der Kommunikation nach Paul Watzlawick
+-	„Man kann nicht nicht kommunizieren“
+-	Inhalts und Beziehungsaspekt; letzter Bestimmt vorigen
+-	„Kommunikation ist immer Ursache und Wirkung“
+-	Symmetrisch oder komplementär
+•	Eisberg-Modell
+-	1/8 – 7/8
+-	Sichtbar – Hintergrund
+7. Mögliche Störungen
+•	Erfolgreich <-> Gestört
+-	Erfolgreich ? Ziel bzw. Wirkung wird erreicht
+-	Gestört ? Ziel bzw. Wirkung nicht erreicht ? individuelle & soziale Probleme

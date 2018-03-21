@@ -1,0 +1,48 @@
+Physik 11/2
+
+ 
+Elektronenstrahlen
+E_kin=E_el
+1/2 mv_a^2=Q·U_b=e·U_b
+? v_a=v(2·e/m·U_b )
+1e·1V=1eV=?1,6·10?^(-19) J
+Ablenkung im homogenen elektrischen Querfeld
+Vgl. waagerechter Wurf
+v_x=v_0; v_y=a·t
+y_1=1/2 at^2
+a=F/m=(E·q)/m=U/d·q/m
+t=l/v_0 
+?  y_1=1/2·U/d·q/m·l^2/(v_0^2 )
+(v: ohne ½ und Zeit linear)
+Ablenkwinkel:
+tan?a=v_y/v_0 =(U_A·q·l)/(d·m·v_0^2 )=(U_A·l)/(2d·U_b )
+Max. U:
+Elektron 2,5kV
+Proton 5MV
+Alphateilchen 10MV
+Bewegung geladener Teilchen in magnetischen Feldern
+F_l=|Q|·v·B=B·l·I
+F_zp=m·v^2/r=m·r·?^2
+F_l=F_zp;?r=(m·v)/(Q·B)
+
+Massenspektograph:
+q·U/d=q·v·B;?v=U/(d·B)
+Hall Effect:
+Lorentzkraft = el. Kraft
+q·v·B=q·E=q·U_h/Höhe
+U_h=Höhe·v·B
+U_h=V/(n·e)·(I·B)/d
+(d parallel zum mag. Feld)
+R_h=V/(n·e);? U_h=R_h·(I·B)/d
+Induktionsspannung
+U_i=-B·l·v=-N·??/?t=-N·? ?
+Wechselspannung
+?=?·cos?(?t)
+U_i=N·B·A·?·sin??(?t)?
+Induktivität
+B=µ_0·µ_r·(N·I)/l
+L=µ_0·µ_r·N^2·A/l
+U_i=-L·?I/?t  (Selbstinduktion)
+Energie mag. Feld
+E_ges=1/2 L·I^2
+(E_el=1/2·C·U^2)

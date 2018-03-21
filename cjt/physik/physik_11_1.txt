@@ -1,0 +1,91 @@
+Physik 11/1
+
+ 
+Statisches elektrisches Feld
+Elektrische Feldstärke
+	Raum um geladene Körper
+	Zeitlich konstant ? statisch
+	el. Feldlinien: Kraft auf POSITIVE Ladung
+	beginnen und enden an Ladungen
+	E ?=F ?/|q|   ;  [E]=1 N/C=1 V/m
+	Plattenkondensator: E ?=U/d
+Elektrische Stromkreise
+	I=  Q/t
+	R=  U/I= ? ·  l/A
+	„ungefährliche“ Spannung 24V
+Reihenschaltung
+	U_ges= U_1+U_2+?
+	I_ges= I_1= I_2=?
+	R_ges= R_1+ R_2+?
+	Spannungsteilerregel:  U_1/U_2 =  R_1/R_2 
+Parallelschaltung
+	U_ges= U_1= U_2=?
+	I_ges= I_1+I_2+?
+	1/R_ges =  1/R_1 +  1/R_2 +?
+	Stromteilerregel:  I_1/I_2 =  R_2/R_1 
+El. Energie und Leistung
+	P=U ·I=  E/t  ;  [P]=1W
+	E=P·t=U·I·t ; [E]=1Ws=1J 
+Feldstärke, Potenzial und Spannung
+	W=F·s=|q|·E ?·s=E_pot
+	f=E_pot/|q| =E ?·s ;  [f]=1V
+	U=?f=E ?·?s
+
+Kondensator: Ladungs- und Energiespeicher
+	C=Q/U  ;  [C]=1 C/V=1F
+	Q=C·U
+	C=e_0·e_r·A/d  (Plattenkondensator)
+	E=1/2 Q·U=1/2 C·U^2
+Coulombsches Gesetz
+	Nur PUNKTFÖRMIGE Ladungen
+	F ?=1/(4pe_0 )·(Q·q)/r^2   (Kraft wirkt auf q)
+	E ?=F ?/|q| =1/(4pe_0 )·Q/r^2 
+Versuch von Millikan
+	Bestimmung Elementarladung e
+	Ladung „gequantelte“ Größe
+	|(F_el ) ?+(F_A ) ? |=|(F_g ) ? |
+	Auflösen nach „q“
+	? e=1,592·?10?^(-19) C
+Kondensatoren (Parallel)
+	C_ges=C_1+C_2+?
+	U_Quelle=U_1=U_2=?
+	C_1/C_2 =Q_1/Q_2 
+Kondensatoren (Reihe)
+	Q_1=Q_2=?
+	U_ges=U_1+U_2+?
+	1/C_ges =1/C_1 +1/C_2 +?
+Magnetfeld
+Magnetisches Feld
+	Feldlinien geschlossene Linien
+	Richtung der Kraft auf einen Nordpol
+	Außerhalb: N?S
+	Ferromagnetische Metalle:
+Eisen, Nickel, Cobalt
+
+Feld der Erde
+	geo. Nord = magn. Süd
+Anwendungen Elektromagnet
+	Klingel:
+Strom ?Magnet an ? Klingel Bewegung ?Strom aus?…
+	Relais:
+Magnet im Steuerstromkreis steuert Schalter im Arbeitsstromkreis
+Magnetische Flussdichte
+	B=F/(I·l)  ;  [B]=1 N/Am=1T
+	B=µ_0·(I·N)/l  (homogenes Feld in langer luftgefüllter Spule; N = Windungen)
+Lorentzkraft
+	F=B·q·v
+	UVW-Regel
+„Sortierung“
+	F_el=F_magn
+	q·U/d=B·q·v
+	v=U/(d·B)
+	Schnellere magnetisch, langsamere elektrisch
+Konstantenverbindung
+	µ_0  × e_(0 )=  1/c^2 
+
+
+
+
+ 
+
+  

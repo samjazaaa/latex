@@ -1,0 +1,153 @@
+Informatik 12/2
+2. Kommunikation und Synchronisation von Prozessen
+Implementierung nebenläufiger Prozesse
+•	Monitor (synchronized) zur Beschränkung des Zugriffs auf einen Abschnitt 
+? evtl. Verklemmungen
+•	sleep() und notify() um Prozesse im Monitor zu blockieren / reaktivieren
+Topologie von Rechnernetzen
+•	Bus-Topologie
+-	Alle Geräte über Bus verbunden
+-	Erst überprüfen ob gerade jemand sendet (carrier sense – CS)
+-	Nachricht an alle ? überprüfen für wen es bestimmt ist (multiple access – MA)
+-	Gefahr einer Kollision ? Erkennung durch Sender (collision detection – CD)
+-	Bridge zur Verknüpfung mehrerer Bus-Netzwerke
+•	Ring-Topologie
+-	Im Ring angeordnet ? immer zwei miteinander verbunden
+-	Eingang + Ausgang
+-	Kontrolleinheit: Token ? senden nur möglich wenn Token bei Gerät
+•	Stern-Topologie
+-	Zentrale Verbindungsstelle
+-	Bus als Vermittlungsstelle ? Hub
+-	Vermittlungsstelle mit Logik zur Paketanalyse und Adressenauswertung ? Switch
+Kommunikation über Protokollschichten
+
+
+
+
+
+•	Grenze zwischen zwei Schichten: Schnittstelle
+•	Kommunikation innerhalb einer Schicht durch Protokoll geregelt
+•	ISO OSI: Anwendungsschicht, Transportschicht (Transport-), Vermittlungsschicht (Network-), Sicherungsschicht (Data Link-), Bitübertragungsschicht (Physical Layer)
+ 
+Internet
+•	Verbindung vieler Einzelnetzwerke durch das Internet Protocol (IP)
+•	Transmission Control Protocol (TCP) zur Kontrolle der Verbindungen
+•	Hierarchisch: Backbone > Internet Service Provider (ISP) und nichtkommerzielle > Kunden
+•	IP-Adresse: IPv4: 4 x 0-255 ? 232 / IPv6 ? 2128
+•	Verbindung von Subnetzen durch Router (Routingtabellen / Standardausgang bei fehlendem Eintrag; z.B. Backbone)
+3. Funktionsweise eines Rechners
+Von-Neumann-Rechner
+
+
+
+
+
+•	Speicherwerk
+-	Speicherung von Befehlen und Daten
+•	Rechenwerk
+-	Verarbeitung der Eingabewerte ( 1 oder 2) durch Rechenoperationen
+-	Speichern zusätzlicher Informationen über das Ergebnis im Statusregister als Flags
+•	Steuerwerk
+-	Steuerung Programmablauf (Austausch zwischen Speicher- und Rechenwerk)
+-	Liest Befehl aus Speicherwerk, interpretiert und verarbeitet ihn
+•	Bus-System
+-	Zentral gesteuert und getaktet
+-	Datenbus (Datenübertragung), Steuerbus (Kommunikationssteuerung), Adressbus (Speicherort)
+-	Paralleler Bus (mehrere gleichzeitige Signale) <-> Serieller Bus (aufeinanderfolgend)
+•	Binärzahlen
+-	Erstes Bit legt Vorzeichen fest (1 negativ)
+-	Gegenzahl: „2er-Komplement“ (1? 0; 0? 1) + 1
+ 
+Registermaschine
+•	Arbeitsspeicher: abzuarbeitendes Programm
+•	Befehlszählregister (BZ): Speicheradresse des nächsten Befehls
+•	Statusregister (SR): Informationen über das Ergebnis der letzten Operation (z.B.: Negativ-, Zero- oder Overflow-Flag)
+•	Datenregister (DR): schnelles speichern ganzer Zahlen
+-	Akkumulator (A): enthält Eingabewert für folgenden Rechenbefehl und nimmt Ergebnis auf
+-	Weitere Datenregister (R1, R2, …): (Zwischen-) Speicherung von Ergebnissen
+
+
+
+
+
+
+Algorithmische Strukturelemente 
+Einseitig bedingt
+01 DLOAD 150
+02 STORE 1
+03 DLOAD 10
+04 STORE 2
+05 DLOAD 160
+06 STORE 3
+07 SUB 1
+08 JLT 12
+09 LOAD 3
+10 SUB 2
+11 STORE 3
+12 LOAD 3
+13 END
+
+
+
+
+> 150 ? -10
+ 
+Beidseitig bedingt
+01 DLOAD 6
+02 STORE 3
+03 DLOAD 8
+04 STORE 4
+05 SUB 3
+06 JLT 12
+07 LOAD 3
+08 STORE 1
+09 LOAD 4
+10 STORE 2
+11 JUMP 16
+12 LOAD 4
+13 STORE 1
+14 LOAD 3
+15 STORE 2
+16 END
+
+kleinere in 1, größerer in 2 
+Bedingte Wiederholung
+01 DLOAD 9
+02 STORE 1
+03 DLOAD 4
+04 STORE 2
+05 LOAD 2
+06 SUB 1
+07 JGT 12
+08 LOAD 1
+09 SUB 2
+10 STORE 1
+11 JUMP 5
+12 LOAD 1
+13 END
+
+
+
+
+Rest bei wiederholtem Teilen
+ 
+Feste Wiederholung
+01 DLOAD 5
+02 STORE 1
+03 DLOAD 1
+04 STORE 2
+05 STORE 3
+06 SUB 1
+07 JGT 15
+08 DLOAD 2
+09 MULT 2
+10 STORE 2
+11 DLOAD 1
+12 ADD 3
+13 STORE 3
+14 JUMP 6
+15 LOAD 2
+16 END
+
+2 hoch R1
+

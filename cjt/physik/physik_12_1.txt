@@ -1,0 +1,115 @@
+Physik 12/1
+
+ 
+1.1 Astronomische Objekte
+	Sonne, Mond, Fixsterne, Wandelsterne ( Planeten), kurzzeitige Objekte( Kometen, Meteorite), Nebel (verwaschene)
+	Sterne je nach Sternbild und Helligkeit
+	Planeten: Stern umkreisen, Kugelgestalt durch Schwerkraft, leere Bahn
+	Doppelsterne
+	Sternhaufen
+	Nebel (M15 / NGC 7078)
+	Staub- und Gaswolken
+	Planetarische Nebel
+	Galaxien
+	Galaxienhaufen
+1.2 Beobachtungsmöglichkeiten
+	Durch Elektromagnetische Wellen (und Teilchenströme)
+	Atmosphäre absorbiert alles außer sichtbares Licht und Radiowellen
+	UV-Strahlung durch Satelliten
+	Röntgen- und Gammastrahlung
+	IR-Strahlung
+	Mikrowellen (auch von Erde)
+	Radiowellen (erdgebunden)
+	Sonden
+1.3 Größenordnungen
+	AE (mittlere Entfernung Erde – Sonne) = 1,496 x 10^11 m
+	1 ly = 9,46 x 10^15 m
+	1 pc (1 AE als eine Winkelsekunde ‚‘‘) = 3,0875 x 10^16 m ~ 3,26 ly
+1.4 Meilensteine der Astronomiegeschichte
+	Ursprüngliche Bedeutung: Religiös und Ackerbau
+	Ägypten: Sonnenjahr 365
+	Mesopotamien: Mondfinsternisse und Astrologie
+	Griechenland: Thales: Scheibe; Pythagoras: Kugel; Herakleides: rotierend; Aristarch: Heliozentrisch und Abschätzung Sonnenentfernung; Eratosthenes: Erdumfang; Ptolemäus: geozentrisch mit Epizykeltheorie
+	Mittelalter: Mauerquadrant
+	Nikolaus Kopernikus: heliozentrisch
+	Tycho Brahe: Mischung
+	Kepler
+	Galilei: Jupitermonde
+	Newton: Gravitationsgesetz
+2.1 Tägliche Rotation der Erde
+	O ? W / zirkumpolar
+	Nachweis durch Foucault-Pendel
+?_v=?_E·sin?f
+	Erde dreht von West nach Ost
+2.2 Koordinatensysteme
+	Geographische Breite: f
+Länge: ?
+	Horizontsystem:
+Von Himmelsmeridian aus Azimut und Höhe
+? Orts- und Zeitabhängig
+	Äquatorialsystem:
+Himmelshorizont: 90° - f
+Stundenwinkel t (24h ? 360°)
+Deklination d (Winkel ü. HÄ)
+Rektaszension a (Zeiteinheiten von ?)
+Frühlingspunkt ? (Schnitt HÄ – Ekliptik)
+Sternzeit ? (Stundenwinkel ?)
+? = a + t
+	Obere Kulmination:
+h_O=d+(90°-f)
+	Untere Kulmination:
+h_u=d-(90°-f)
+2.3 Jährliche Bewegung der Erde
+	Ekliptik um 23,5° gegen HÄ geneigt
+	Äquinoktium bei Frühlings- und Herbstanfang (d = 0; a = 0h / 12h)
+	Sonnenwende (Solstitium)
+d = 23,5°; senkrecht über Wendekreise
+	Jahreszeiten:
+Sommer: zugeneigt aber eher Aphel
+Winter: abgeneigt aber eher Perihel
+2.4 Die Erde als Kreisel
+	Drehimpuls:
+L ?=r ?×p ?
+r: Radiusvektor
+p: Impuls auf Bahn
+	Präzession ausgelöst durch Drehmoment (durch G), das aber wegen dem Drehimpuls nicht zum Kippen führt
+	Erde nutiert (kleiner Kreise im Rahmen der Präzession)
+	Präzessionskreis: 26000 Jahre
+	Neigung gegen Ekliptik jedoch konstant
+2.5 Astronomische Zeitrechnung
+	Sonnentag: 
+Zeit zwischen 2 Sonnenkulminationen
+WOZ ? unterschiedliche Tageslänge
+MOZ : Mittelwert aller Sonnentage
+	Wahrer/mittlerer Sonnentag:
+Uhr und Sonne laufen auseinander
+Analemma („8“)
+	Sterntag (siderischer)
+Zeit zwischen Kulminationen eines Sterns
+23h 56 min
+	Differenz:
+Erde muss sich ~361 bis zum nächsten Sonnenhöchststand drehen
+	Synodischer Monat:
+29,5-tägiger Mondzyklus
+	Siderischer Monat:
+ganzer Umlauf Mond um Erde
+27 1/3 Tage
+Dauer gleiche Mondphase:
+360° + 30° = 390°
+	Siderisches Jahr:
+Erde um Sonne bezüglich Fixsternen
+	Tropisches Jahr:
+Zeit zwischen 2 Äquinoktien; kürzer
+Ursache: Präzession
+	Schaltjahre
+
+2.6 Mondphasen und Finsternisse
+	Mondbahn 5° gegen Ekliptik geneigt
+	Schnittpunkte aufsteigender und absteigender Knoten (nicht stationär; Saros-Zyklus 18,6a)
+	Bei Schnitt Finsternis statt Vollmond
+	Kernschatten <-> Halbschatten
+	Mondfinsternis von jedem Ort beobachtbar
+	Sonnenfinsternis:
+Durchmesser max. 300 km; max. 7.5 min.
+	Bei zu großem Abstand Mond – Erde am Neumondschnittpunkt: ringförmig oder keine Sonnenfinsternis
+
