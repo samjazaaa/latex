@@ -13,7 +13,7 @@ headsep=5mm, footskip=12mm}
 
 \pagenumbering{gobble}
 
-\title{\vspace{-1.25cm}Zusammenfassung IDB\vspace{-0.25cm}}
+\title{\vspace{-1.25cm}Zusammenfassung Crypto\vspace{-0.25cm}}
 \date{\vspace{-5ex}}
 
 
@@ -22,732 +22,118 @@ headsep=5mm, footskip=12mm}
 	\maketitle
 
 
-	\section{Einführung}
-		\begin{itemize}
-			\item Datenunabhängigkeit
-			\item Schichtenmodell
-		\end{itemize}
+	%\section{Allgemeine Kryptosysteme}
+	%	\begin{itemize}
+	%		\item 
+	%	\end{itemize}
 
-	\section{Dateiverwaltung}
+	\section{Blockchiffren}
 		\begin{itemize}
-			\item physische vs. logische Speichergeräte
-			\item Linearer vs. wahlfreier Zugriff
-			\item Speicherhierarchie
-			\item Magnetplattenspeicher: \\
-				CHS / Zylinder, Spur, Block in Slot (Sektor)
-			\item Gerätetreiber erzeugen \textbf{logische Speichergeräte}
-				$\Rightarrow$ RAID, Partitionen
-			\item \texttt{readBlock} und \texttt{writeBlock} adressieren die 
-				Slots physisch
-			\item \textbf{Vorteile:} schnell und maximale Ausnutzung 
-			\item \textbf{Nachteile:} kein Schutz, Wissen über Zuordnung nötig, 
-				Reservierung, starre Aufteilung
-			\item Indirektion durch \textbf{Dateien} (dynamisch erweiterbare Folge von 
-				Blöcken, abstrahiert von physischen Details)
-			\item Blockdatei-Zugriffsschnittstelle erhält Name, Modus und 
-				verwendete Blockgröße und legt Verwaltungsdatenstruktur an
-			\item Operationen: \texttt{append(blocks)}, 
-				\texttt{write(nr, buf)}, \texttt{read(nr, buf)}, 
-				\texttt{size()}, \texttt{drop(blocks)}
-			\item Verwaltungsstruktur: Abbildung Dateiname auf Folge von 
-				Blöckenund Blocknummer zu physischer Slot-Adress
-			\item Freispeicherverwaltung (z.B. Bitliste)
-		\end{itemize}
-
-	\section{Sätze}
-		\begin{itemize}
-			\item Variable, von Anwendung bestimmte, Länge 
-			\item Folge von Bytes (keine innere Struktur)
-			\item \textbf{Satz-Datei:} Menge von Sätzen fester / variabler 
-				Länge\\~
-			\item Blockung
+			\item Symmetrisch und deterministisch
+			\item Verschlüsselung von Blöcken gleicher Länge
+			\item Stromchiffren
 				\begin{itemize}
-					\item mehrere Sätze pro Block
-					\item Jeder Satz vollständig in Block
-					\item Feste Länge: Position aus Blockgröße und 
-						Satzlänge errechenbar
-					\item Variable Länge: Umsortieren für wenig 
-						ungenutztem Platz 
+					\item Meist Blöcke variabler Länge
+					\item Kein Warten bis Block voll
 				\end{itemize}
-			\item Sequenzielle Satzdatei
+			\item Betriebsmodi
 				\begin{itemize}
-					\item Folge von Sätzen sequentiell in Blockdatei 
-						gespeichert
-					\item Nur sequentieller Lese-/Schreibzugriff
-					\item Nicht wahlfrei oder Einfügen / Ändern
-					\item Stapelverarbeitung
-					\item Öffnen mit Name, Modus und Länge (oder 0)
-					\item \texttt{readNext(len, buf)}, 
-						\texttt{writeNext(buf, len)}
-				\end{itemize}
-			\item Puffer
-				\begin{itemize}
-					\item Sätze puffern vor dem Schreiben
-					\item Wechselpuffertechnik (einer wird 
-						geschrieben, anderer kann verwendet 
-						werden, Prefetching)
-					\item Allgemeiner Puffer
+					\item ECB (Electronic Code Book)
 						\begin{itemize}
-							\item Pufferrahmen (Kacheln) für 
-								Blöcke
-							\item Beim Lesen n Blöcke 
-								(Prefetching)
-							\item Beim schreiben mehrere 
-								füllen, dann schreiben
+							\item Nachricht in 
+								gleich große 
+								Blöcke teilen
+							\item Evtl. Padding
+							\item Gleiche Blöcke gleich verschlüsselt
+							\item Keine Rückkopplung / Randomisierung
 						\end{itemize}
-				\end{itemize}
-			\item Direktzugriff durch Satzadresse (eindeutig, unveränderlich)
-			\item TID-Konzept
-				\begin{itemize}
-					\item Array mit Anfangsadressen aller Sätze im 
-						Block am Ende
-					\item Satzadresse: Blocknummer + Index
-					\item Löschen: Arrayeintrag als ungültig markieren
-					\item Bei Überlauf wird statt dem Satz eine TID 
-						mit Verweis auf neuen Block gespeichert
-				\end{itemize}
-			\item Direkte Satzdatei
-				\begin{itemize}
-					\item \texttt{TID insert(buf, len), 
-						read(TID, buf, len), 
-						modify(TID, buf, len), delete(TID)}
-					\item Sequentielles Lesen weiterhin möglich 
-						(undefinierte Reihenfolge)
-				\end{itemize}
-			\item Freispeicherverwaltung
-				\begin{itemize}
-					\item Am Anfang des Blocks ungünstig
-					\item k Blöcke am Anfang der Datei als 
-						Freispeichertabelle (freie Bytes im i-ten 
-						Block)
-				\end{itemize}
-		\end{itemize}
-
-	\section{Schlüsselzugriff}
-		\begin{itemize}
-			\item Hashing
-				\begin{itemize}
-					\item Berechnung der Blocknummer aus Suchschlüssel
-					\item Voraussetzung: Anzahl der Sätze abschätzbar
-					\item Spezielle Blöcke als Buckets
-					\item Geeignete Hash-Funktion (evtl. modulo)
-					\item Überlauf
+					\item CBC (Cipher Block Chaining)
 						\begin{itemize}
-							\item Open Addressing (auslagern 
-								in Nachbarbuckets)
-							\item Overflow-Buckets (Pointer im 
-								Primärbucket)
+							\item Teilen / Padding
+							\item Initialisierungsvektor
+							\item Rückkopplung mit Ciphertext des vorherigen Blocks
+							\item Pseudorandomisierung
 						\end{itemize}
-					\item \texttt{inser(buf,len,key), read(key,len)}
-					\item \texttt{modify-key(old,new)}
-					\item Vorteile: schnell
-					\item Nachteile: keine Reihenfolge, Speicherplatz 
-						muss reserviert werden, nur nach einem 
-						Schlüssel speicherbar
-				\end{itemize}
-			\item Virtuelles Hashing
-				\begin{itemize}
-					\item $q$ Buckets mit je $b$ Sätzen
-					\item Belegungsfaktor $\beta$ = gespeichert / 
-						Kapazität
-					\item Wenn $\beta>\alpha=0.8$ mehr Buckets
-					\item VH1
+					\item CFB (Cipher Feedback Mode)
 						\begin{itemize}
-							\item $q$ neue Buckets dahinter
-							\item Bei Einfügen in Bucket mit 
-								Überläufern, Rehash der 
-								Sätze mit $h2$ und Bit 
-								$i$ setzen
+							\item Selbstsynchronisierende Stromchiffre
+							\item Initialisierungsvektor
+							\item Rückkopplung mit vorherigem Ciphertext in Schieberegister
 						\end{itemize}
-					\item Lineares Hashing
+					\item OFB (Output Feedback Mode)
 						\begin{itemize}
-							\item $\alpha$ überschritten
-								$\Rightarrow$ 1 neuer 
-								Bucket am Ende
-							\item Dann Bucket auf dem Zeiger 
-								$p$ steht aufteilen
-							\item Erst $h1$, wenn kleiner als 
-								$p$ dann $h2$
-							\item Nach Bucket $q-1$, $p=0$
+							\item Synchrone Stromchiffre
+							\item Rückkopplung mit verwendetem Teil des zuvor generierten Schlüsselteils
 						\end{itemize}
-				\end{itemize}
-			\item B-Bäume
-				\begin{itemize}
-					\item Knoten: Anzahl Einträge ($k\leq n\leq 2k$)
-					\item Wurzel kann auch nur einen Eintrag haben
-					\item Inhalt: $n$, $P_0$ k-mal ($K_i,D_i,P_i$)
-					\item Pfad von Wurzel nach Blatt hat immer Länge 
-						$h-1$
-					\item Außer Wurzel immer mindestens $k+1$ 
-						Nachfolger
-					\item Wurzel ist Blatt oder hat mind. 2 Nachfolger
-					\item Höchstens $2k+1$ Nachfolger
-					\item Einfügen nur in Blattknoten
-					\item Blatt voll $\Rightarrow$ Split
+					\item CTR (Counter Mode)
 						\begin{itemize}
-							\item $k$ link, $k$ rechts
-							\item mittleres Element als 
-								Diskriminator in 
-								Elternknoten
-							\item Wurzelsplit erhöht Höhe
-							\item Auslastung $\geq 50\%$
-						\end{itemize}
-					\item Löschen im B-Baum
-						\begin{itemize}
-							\item Kleinstes Element aus 
-								rechtem Unterbaum 
-								/ größtes aus Linkem 
-								nachrücken
-							\item Unterlauf $\Rightarrow$ 
-								Mischen
-							\item Mischen: Blätter + 
-								Diskriminator in einen 
-								Knoten
-						\end{itemize}
-				\end{itemize}
-			\item B*-Baum
-				\begin{itemize}
-					\item Sätze / TIDs nur in Blattknoten gespeichert
-					\item Innerer Knoten: $n$, $P_0$, m-mal $R_i,P_i$
-					\item Blattknoten: $n$, $V$, j-mal $S_i,D_i$, $N$
-					\item Bei Split eins mehr rechts und größtes 
-						Linkes als Diskriminator
-					\item Bei Unterlauf: Wenn Nachbarsumme nicht 
-						größer als 2k einfach Mischen ansonsten 
-						Nachbarn neu aufteilen
-				\end{itemize}
-			\item Bitmap-Index
-				\begin{itemize}
-					\item Lohnt sich bei niedriger Selektivität 
-						(Anteil passender Sätze von allen)
-					\item Für jeden Schlüsselwert Bitliste
-					\item Feste Reihenfolge notwendig
-					\item Größe: Werte x Anzahl Sätze
-					\item Einfache logische Verknüpfungen
-				\end{itemize}
-			\item Zugriff:\\ \texttt{insert(buf,len,key), read(key,len), 
-				modKey(old,new)}
-			\item Organisation
-				\begin{itemize}
-					\item Primär: Speicherung Satz in Block (seq., 
-						direkt, Schlüssel)
-					\item Sekundär: Verweis, nur möglich wenn Primär 
-						Direktzugriff unterstützt
-					\item Einfügen: In Satzdatei und (Key,TID) in 
-						Indexdateien
-					\item Suchen: read in Satzdatei, read in Index, 
-						Scan über Satzdatei
-				\end{itemize}
-			\item Primärschlüssel: darf nur in einem Satz vorkommen
-		\end{itemize}
-
-	\section{Puffer}
-		\begin{itemize}
-			\item Frame: Platz für einen Block im Hauptspeicher
-			\item logischer Zugriff $\neq$ physischer Zugriff
-			\item Bei Verdrängung geänderte Blöcke zurückschreiben
-			\item Ersetzungsverfahren
-				\begin{itemize}
-					\item FIFO: ungünstig bei Direktzugriff
-					\item LFU: Häufig benutzte Blöcke bleiben evtl. zu 
-						lange im Puffer
-					\item LRU: Stapel, aufwändig
-					\item CLOCK: used-Bit bei Nutzung auf 1 
-				\end{itemize}
-			\item Noch benutzte Blöcke dürfen nicht verdrängt werden!
-			\item Schnittstelle
-				\begin{itemize}
-					\item \texttt{fix(File,BlockNo,Mode)} fixiert 
-						Block im Buffer
-					\item \texttt{unfix(bufAddr)} Freigabe zur 
-						Ersetzung
-					\item read durch fix ersetzen, unfix einfügen und 
-						write weglassen / durch unfix ersetzen
-					\item leerer Block muss auch gefixed werden
-				\end{itemize}
-			\item Im Fehlerfall Inkonsistenzen durch Hauptspeicherverlust
-			\item Seite = Block im Puffer
-			\item Evtl. mehrere Blöcke für Seite (alt und neu)	
-			\item Einbringungsstrategien
-				\begin{itemize}
-					\item Nicht direkt schreiben sondern in extra 
-						Block und dann atomar umschalten
-				\end{itemize}
-			\item Segment
-				\begin{itemize}
-					\item Entspricht Datei (Folge von Seiten)
-					\item Einheit des Sperrens, Recovery und 
-						Zugriffskontrolle
-					\item Zuordnung Segmente-Dateien systemabhängig
-					\item Segmenttypen
-				\end{itemize}
-			\item Seitenzuordnung
-				\begin{itemize}
-					\item Direkt: Seitenfolgen direkt auf Blockfolgen 
-						einer Datei abbilden (N:1, 1:1)
-					\item Indirekt: Mehr Flexibilität aber 
-						Hilfsstruktur nötig
-					\item Seitentabelle enthält jeweilige Blockadresse
-					\item Datei hat Bitliste, die aktuelle Belegung 
-						angibt
-				\end{itemize}
-			\item Seiteneinbringung
-				\begin{itemize}
-					\item Direkt
-						\begin{itemize}
-							\item Beim Verdrängen wird 
-								Einlagerungsblock 
-								überschrieben
-							\item Ein Block pro Seite
-							\item Alter Zustand vor Änderung 
-								sichern (Write-Ahead-Log)
-						\end{itemize}
-					\item Indirekt
-						\begin{itemize}
-							\item Beim Verdrängen in freien 
-								Block schreiben
-							\item Schattenspeicher / Twin 
-								Slots
-						\end{itemize}
-					\item Schattenspeicher
-						\begin{itemize}
-							\item Alle Seiten eines Segments 
-								in Sicherungsintervall 
-								konsistent speichern
-						\end{itemize}
-					\item Twin Slots
-						\begin{itemize}
-							\item Direkte Seitenzuordnung aber 
-								doppelt
-							\item Seiten brauchen 
-								Versionsnummer
-							\item Immer zwei Blöcke lesen
-						\end{itemize}
-				\end{itemize}
-			
-		\end{itemize}
-
-	\section{Programmzugriff}
-		\begin{itemize}
-			\item Eingebettetes SQL
-				\begin{itemize}
-					\item Vorübersetzer wandelt in C um
-					\item \texttt{EXEC SQL <SQL>;}
-					\item INTO Klausel für Ergebnisse, 
-						Programmvariablen durch Doppelpunkt 
-						kennzeichnen
-					\item \texttt{exec sql include sqlca;}
-					\item \texttt{exec sql begin / end declare 
-						section;}
-					\item \texttt{exec sql declare c1 cursor for 
-						<SQL>;}
-					\item \texttt{exec sql open c1;}
-					\item \texttt{exec sql fetch c1 into :pnr;}
-					\item \texttt{if(sqlca.sqlcode==100) break;}
-					\item \texttt{exec sql close c1;}
-					\item Erzeugt optimierte Zugriffsmodule zu 
-						Übersetzungszeit
-
-				\end{itemize}
-			\item Unterprogrammaufruf
-				\begin{itemize}
-					\item Call-level interface
-					\item Treiber Laden
-					\item \texttt{Connection con = 
-						DrvrMngr.getConn(url,"foo","bar")}
-					\item \texttt{Statement anw = 
-						con.createStatement()}
-					\item \texttt{ResultSet res = 
-						anw.executeQuery(``SELECT")}
-					\item \texttt{res.next() / getInt(1)}
-					\item res und anw closen
-					\item \texttt{PreparedStatement ins = 
-						con.prepareStatement (``INSERT ?,?")}
-					\item \texttt{setBoolean(1,true)}
-					\item \texttt{CallableStatement ca = 
-						con.prepareCall("\{ call Test (?,?)\}")}
-				\end{itemize}
-		\end{itemize}
-
-	\section{Transaktionen}
-		\begin{itemize}
-			\item Programmfehler, Systemfehler, Gerätefehler
-			\item Physische Konsistenz
-				\begin{itemize}
-					\item Strukturen und TIDs stimmen
-					\item Indexe vollständig und stimmen mit 
-						Primärdaten überein
-				\end{itemize}
-			\item Logische Konsistenz
-				\begin{itemize}
-					\item Zustand der realen Welt
-					\item Referenzielle Integrität, Assertions usw.
-				\end{itemize}
-			\item Undo und Redo durch Logging ermöglichen
-			\item Transaktion
-				\begin{itemize}
-					\item Folge von DB Ops. von konsistent nach 
-						konsistent
-					\item Fehler vor Ende: undo, danach redo
-					\item commit vs. abort
-					\item Atomar (alles oder nichts)
-					\item Konistent (so lange wie nötig)
-					\item Isolation (jede Transaktion alleine)
-					\item Dauerhaft (Ergebnisse persistent)
-				\end{itemize}
-		\end{itemize}
-	
-	\section{Speicherung von Tupeln}
-		\begin{itemize}
-			\item Systemkatalog enthält Infos über Felder
-			\item Gleicher Satztyp für Tupel derselben Relation
-			\item Speicherungsstruktur in Sätzen
-				\begin{itemize}
-					\item Konkatenation fester Länge: speicheraufwändig
-					\item Zeiger im Vorspann: unflexibel beim 
-						Hinzufügen
-					\item Eingebettete Längenfelder: dynamisch aber 
-						keine direkte Berechnung der internen 
-						Adresse aus Katalogdaten
-					\item Gesamtlänge, FL, L-V, ...
-					\item Eingebettete mit Zeiger:\\
-						GL,FL,F,P,F,...,L,V,...
-				\end{itemize}
-			\item C-Stores
-				\begin{itemize}
-					\item Speichert Sammlung von Spaltengruppen
-					\item Spaltengruppe: Projektion (nach Attr. 
-						sortiert)
-					\item Schreibspeicher, Lesespeicher und 
-						Tuple Mover
-					\item Projektionen: Verbindung zusammengehöriger 
-						Attribute (verschiedener) Relationen
-					\item \texttt{EMP1 (name,DEPT.floor | name)}
-					\item Für jede Tabelle überdeckende 
-						Projektionsmenge
-					\item Speicherschlüssel ermöglicht Rekonstruktion 
-						der Tupel (errechenbar aus Pos.)
-					\item Verbund-Indexe: Umsortierung gemäß SK
-					\item Physische Strukturen / Komprimierung
-						\begin{itemize}
-							\item Sortiert, wenig Werte:\\
-								Tripel 
-								(value,first,count), 
-								organisiert in B-Baum
-							\item Unsort., wenig:\\
-								(val,bitmap) mit 
-								Lauflängencodierung, 
-								Offset-Indexe
-							\item Sort., versch.:\\
-								Delta-Codierung: Diff 
-								zum Vorgänger in B-Baum
-							\item Unsort., versch.:\\
-								keine Kompr., B-Baum als 
-								sekundär möglich
-							\item Bei Zeichenketten Dictionary
-						\end{itemize}
-					\item Schreibspeicher
-						\begin{itemize}
-							\item Gleiche Projektionen aber 
-								andere Struktur
-							\item SK explizit gespeichert
-							\item keine Komprimierung
+							\item Zähler wird zu Initialisierungsvektor addiert
+							\item IV also immer NONCE
+							\item Schutz vor Replay
 						\end{itemize}
 				\end{itemize}
 		\end{itemize}
 	
-	\section{Anfrageverarbeitung}
+	\section{Affin lineare Blockchiffren}
 		\begin{itemize}
-			\item Unabhängige vs. korrelierte Unterabfragen
-			\item Anfrageverarbeitung (Ausführungsplan) vs. Anfrageausführung
-			\item Phasen der Anfrageverarbeitung
-				\begin{itemize}
-					\item Analyse (Parser, Zugriffskontrolle, 
-						Integritätskontrolle)
-					\item Optimierung (Optimizer)
-					\item Code-Generierung
-					\item Ausführung (Ausführungskontrolle, 
-						Interpreter)
-				\end{itemize}
-			\item Analyse
-				\begin{itemize}
-					\item Lexikalische und syntaktische Analyse 
-						$\Rightarrow$ Anfragebaum
-					\item Semantische Analyse (Existenz, Gültigkeit, 
-						Konvertierung)
-					\item Zugriffs- und Integritätskontrolle
-				\end{itemize}
-			\item Vereinfachung
-				\begin{itemize}
-					\item Standardisierung in Normalform ohne 
-						Redundanzen
-					\item Restrukturierung: Algebraisch (Struktur) vs. 
-						Planoperatoren (Transformation)
-				\end{itemize}
-			\item Interndarstellung einer Anfrage
-				\begin{itemize}
-					\item logische Operatoren mit 
-						Anfrage-/Operatorbaum darstellen
-					\item \texttt{SEL(R,pre(...)), PROJ(R,L), 
-						CROSS(R,S), JOIN(R,S,pred)}
-					\item \texttt{UNION(R,S), INTERSECT(R,S), 
-						EXCEPT(R,S)} 
-					\item Multimengen Operatoren
-					\item \texttt{RENAME, DUP-ELIM, SUM, COUNT, GROUP, 
-						G-PROJ, SORT, OUTER-JOIN}
-				\end{itemize}
-			\item Standardisierung und Vereinfachung
-				\begin{itemize}
-					\item Normalformen (CNF)
-					\item Idempotenzregel, nicht erfüllbare Ausdrücke 
-						usw.
-					\item Konstanten-Propagierung
-					\item Nutzung von semantischen 
-						Integritätsbedingungen
-				\end{itemize}
-			\item Restrukturierung
-				\begin{itemize}
-					\item Verbund assoziativ und kommutativ
-					\item Selektionen und Projektionen können jeweils 
-						zusammengefasst werden
-					\item Selektion und Verbund dürfen getauscht 
-						werden
-					\item Selektion und Kreuzprodukt zu Join
-					\item Selektionen und Projektionen so früh wie 
-						möglich
-				\end{itemize}
+			\item dummy
 		\end{itemize}
 	
-	\section{Relationale Operatoren}
+	\section{Perfekte Geheimhaltung}
 		\begin{itemize}
-			\item Ersetzen der logischen Operatoren durch Planoperatoren
-			\item Selektion
-				\begin{itemize}
-					\item Relationen-Scan: Sequentiell alle Tupel 
-						lesen
-					\item Index-Scan: direkt auf ersten Match dann 
-						sequentiell weiter
-				\end{itemize}
-			\item Projektion meist bei anderen Planoperatoren enthalten
-			\item Sortierung
-				\begin{itemize}
-					\item Für ORDER BY, Joints, DISTINCT, Gruppierung
-					\item blockierend $\Rightarrow$ kein Pipelining
-				\end{itemize}
-			\item Join allgemein
-				\begin{itemize}
-					\item n-Wege Join in 2-Wege Joins zerlegen
-					\item Verbundattribut vs. Selektionsattribut
-					\item Gleichverbund oder allgemein
-				\end{itemize} 
-			\item Nested-Loop-Join
-				\begin{itemize}
-					\item R, S nicht sortiert und keine Indexe über VA
-					\item Scan über R; wenn SA, dann scan über S und 
-						check VA und SA
-					\item $O(n^2)$
-					\item Wenn VA von S UNIQUE kann früher abgebrochen 
-						werden
-				\end{itemize}
-			\item Nested-Loop mit Index
-				\begin{itemize}
-					\item $I_R(VA)$ und $I_S(VA)$ vorhanden
-					\item Gleichverbund
-					\item Scan über S und prüfe mit Index ob R 
-						Partner hat
-				\end{itemize}
-			\item Sort-Merge-Verbund
-				\begin{itemize}
-					\item Sortiere Relationen nach VA (mit Überprüfung 
-						SA)
-					\item Gleichmäßig scannen und Partner prüfen
-					\item $O(N\;log\;N)$
-				\end{itemize}
-			\item Hash-Verbund (Classic)
-				\begin{itemize}
-					\item Abschnittweise kleinere Relation R lesen
-					\item In p Abschnitte aufteilen, die in 
-						Hauptspeicher passen und SA erfüllen
-					\item Aufbau einer Hashtabelle über VA
-					\item Überprüfe jeden Satz in S der SA erfüllt ob 
-						gehashtes VA matched
-					\item $O(p\times N)$
-					\item Verbesserung: Partitionierung von R nach VA
-				\end{itemize}
-			\item Simple Hashing mit doppelter Partitionierung
-			\item Duplikat-Eliminierung durch sort and group oder hash
-			\item Gruppierung durch sortieren oder hash
-			\item Kostenarten: Berechnung, E/A, Speicher, Kommunikation
-			\item Annahmen: Daten und Attribute gleichverteilt und Prädikate 
-				unabhängig
-			\item Kostenformel
-				\begin{itemize}
-					\item  Kosten: \#physische-Zugriffe + \\
-						W $\times$ \#Aufrufe-Zielsystem
-					\item CPU-bound $W_{CPU}$=\#Intr-pro-Zielaufruf / 
-						\#Instr-pro-E/A
-					\item I/O-bound: $W_{IO}$=\#Instr-pro-Ziel / \\ 
-						(\#Instr-pro-E/A + Zugriffszeit $\times$ 
-						MIPS)
-				\end{itemize}
-			\item Statistische Kenngrößen
-				\begin{itemize}
-					\item Segmente: Anzahl Daten / leeren Seiten
-					\item Relationen: Tupel, Seiten, Clusterfaktor 
-						(Tupel / Seite)
-					\item Index: Anzahl Schlüsselwerte, Blattseiten
-					\item Periodische Neubestimmung
-				\end{itemize}
-			\item Selektivitätsabschätzung
-				\begin{itemize}
-					\item Erwarteter Anteil an Tupeln, die Prädikat 
-						erfüllen
-					\item $A_i=a_i$: 1/\#keys falls Index, 1/10 sonst
-					\item $A_i=A_k$: 1/max(\#keys) falls beide Index
-					\item $A_i>a_i$: delta max / delta ges oder 1/3
-				\end{itemize}
-			\item Indexstrukturen reduzieren Laufzeit bei sehr geringen 
-				Trefferraten / hoher Selektivität (5\%)
+			\item dummy
 		\end{itemize}
 	
-	\section{Synchronisation}
+	\section{DES-Algorithmus}
 		\begin{itemize}
-			\item Datenbankkonsistenz vs. Transaktionskonsistenz 
-				(nebenläufiger Ablauf)
-			\item Anomalien
-				\begin{itemize}
-					\item lost update / dirty write: w-w-dependency\\
-						$r_1[A],r_2[A],w_1[A],w_2[A],c_1,c_2$
-					\item dirty read: Lesen eines geänderten Wertes, 
-						dann rolback; write-read\\
-						$w_1[A],r_2[A],w_2[A],a_1,c_2$
-					\item Inkonsistente Analyse: Während Werte gelesen 
-						werden, werden andere manipuliert; 
-						read-write\\
-						$r_2[A],w_1[A],w_1[B],r_2[B],c_1,c_2$
-				\end{itemize}
-			\item Serialisierbarkeit
-				\begin{itemize}
-					\item Serialisierbar wenn äquivalent zu seriellem 
-						Ablauf
-					\item $r_i[A] <_H w_j[A] \Leftrightarrow 
-						r_i[A] <_G w_j[A]$
-					\item Auch für w-r und w-w
-				\end{itemize}
-			\item Abhängigkeitsgraph
-				\begin{itemize}
-					\item Knoten Transaktionen, Kanten Konflikte
-					\item Serialisierbar wenn keine Zyklen
-				\end{itemize}
-			\item Sperrverfahren
-				\begin{itemize}
-					\item Schreibsperre (x) vs. Lesesperre (s)
-					\item Nur s-Sperren sind kompatibel
-					\item Statisches (zu Beginn) vs. dynamisches 
-						Sperren
-					\item Freigabe erst am Ende der Transaktion
-					\item Sperrgranulat Tupel: ineffizient, 
-						Phantom-Problem
-					\item Hierarchische Sperrung (DB, Segmente, 
-						Relationen, Tupel)
-					\item Intention Locks: IS/IX: untergeordnete 
-						Objekte sind gesperrt
-					\item Top Down bei Erwerb, Bottom Up bei 
-						Freigabe
-					\item SIX = S + IX: sperrt S, verlangt tiefer nur 
-						noch IX/X; alle lesen, ein paar ändern
-				\end{itemize}
-			\item Optimistische Verfahren
-				\begin{itemize}
-					\item Zugriff ohne Sperren und bei commit 
-						überprüfen, ob Überschneidungen
-				\end{itemize}
-			\item Deadlocks (Timeout, prevention, avoidance, detection)
+			\item dummy
 		\end{itemize}
 	
-	\section{Recovery}
+	\section{AES-Algorithmus}
 		\begin{itemize}
-			\item Voraussetzung: Logging, Undo/Redo Mechanismen
-			\item Physische (SQL) vs. logische Konsistenz (Transaktion)
-			\item Fehler: Transaktion, System, Geräte
-			\item Recovery-Klassen
-				\begin{itemize}
-					\item Partial Undo (R1): Transaktionsfehler
-					\item Partial Redo (R2): Systemfehler
-					\item Global Undo (R3): Systemfehler
-					\item Global Redo (R4): Gerätefehler
-				\end{itemize}
-			\item Archivkopien: cold vs. hot
-			\item Protokolldateien: physisch vs. logisch
-			\item Einbringungsstrategien
-				\begin{itemize}
-					\item Steal: Bei Verdrängung schreiben, auch vor 
-						TA-Ende
-					\item NoSteal: Frühestens bei commit $\Rightarrow$ 
-						kein Undo erforderlich aber großer Puffer
-					\item NoForce: Erst bei Verdrängung schreiben, 
-						auch wenn TA schon zu Ende
-					\item Force: Bei commit schreiben $\Rightarrow$ 
-						kein partial Redo
-					\item NotAtomic: update in place
-					\item Atomic: indirekte Einbringung z.B. 
-						Schattenspeicher
-				\end{itemize}
-			\item Protokolldaten
-				\begin{itemize}
-					\item Physische Zustände: Before/After-Images
-					\item Logische Übergänge: SQL-Ops
-					\item Physische Übergänge: EXOR-Diffs.
-					\item Undo Infos VOR Änderung schreiben: WAL
-					\item Redo Info muss vor Abschluss der TA 
-						geschrieben werden
-					\item Seitenprotokollierung before/after: schnelle 
-						Recovery aber hohes IO
-					\item Eintragsprotokollierung: Nur geänderte Teile 
-						protokollieren und Pufferung im 
-						Hauptspeicher
-				\end{itemize}
-			\item Sicherungspunkte
-				\begin{itemize}
-					\item Direkter Sicherungspunkt: Alle geänderten 
-						Seiten ausschreiben und einbringen
-					\item Transaction-Oriented Checkpoint (TOC)
-						\begin{itemize}
-							\item Geänderte Seiten bei TA-Ende 
-								einbringen (Force)
-							\item kein Redo
-						\end{itemize}
-					\item Transaction-Consistent Checkpoint (TCC)
-						\begin{itemize}
-							\item Alle erfolgreichen TAs 
-								einbringen
-							\item Muss angemeldet werden und 
-								setzt Lesesperre
-							\item Verzögert neue TAs
-							\item Besseres Undo + Redo
-						\end{itemize}
-					\item Action-Consistent Checkpoint
-						\begin{itemize}
-							\item Zu Beginn keine Änderungsops.
-							\item Kürzere Totzeit aber auch 
-								nur geringe Hilfe für Redo
-						\end{itemize}
-				\end{itemize}
-			\item Systemfehler
-				\begin{itemize}
-					\item Direkt: nur physisches Logging
-					\item Indirekt: physisch Konsistent, logisches 
-						Logging möglich
-					\item Restart
-						\begin{itemize}
-							\item Analyse-Lauf von CP bis 
-								Log-Ende
-							\item Redo-Lauf vorwärts
-							\item Undo-Lauf rückwärts bis 
-								älteste abgebrchene TA
-						\end{itemize}
-				\end{itemize}
-			\item Geräte-Recovery: Full vs. Incremental Backup
+			\item dummy
 		\end{itemize}
+	
+	\section{RSA-Verfahren}
+		\begin{itemize}
+			\item dummy
+		\end{itemize}
+	
+	\section{Diffie-Hellmann und ElGamal}
+		\begin{itemize}
+			\item dummy
+		\end{itemize}
+	
+	\section{Hashfunktionen}
+		\begin{itemize}
+			\item dummy
+		\end{itemize}
+	
+	\section{Digitale Signaturen}
+		\begin{itemize}
+			\item dummy
+		\end{itemize}
+	
+	\section{Public-Key-Infrastrukturen}
+		\begin{itemize}
+			\item dummy
+		\end{itemize}
+	
+	\section{Primzahlerzeugung}
+		\begin{itemize}
+			\item dummy
+		\end{itemize}
+	
+	\section{Identifikationsmechanismen}
+		\begin{itemize}
+			\item dummy
+		\end{itemize}
+	
+	\section{Elliptische Kurven}
+		\begin{itemize}
+			\item dummy
+		\end{itemize}
+
+
 
 \end{document}
