@@ -197,50 +197,297 @@ headsep=5mm, footskip=12mm}
 	
 	\section{AES-Algorithmus}
 		\begin{itemize}
-			\item Schlüssellänge 128, 192 oder 256
+			\item Schlüssellänge 128 (4), 192 (6) oder 256 (8)
+			\item Rundenzahl 10, 12 oder 14
 			\item Blocklänge 128
 			\item Bytes und Wörter als Polynom interpretiert
 			\item Interner Zustand enthält $4*Nb=16$ Bytes (Spaltenweise)
+			\item \texttt{KeyExpansion}
+				\begin{itemize}
+					\item Erzeugt expandierten Schlüssel mit\\
+						$4*(Nr+1)$ Wörtern
+					\item Ersten $Nk$ Wörter gleich Eingabeschlüssel
+					\item Restliche Wörter durch Substitution, Shift und XOR generieren 
+				\end{itemize}
+			\item Algorithmus zur Verschlüsselung
+				\begin{enumerate}
+					\item \texttt{AddRoundKey}: Roundkey mit Blocklänge per XOR mit state verknüpfen
+					\item \texttt{SubBytes}: Bytes gemäß S-Box substituieren (nicht linear und dynamisch berechenbar)
+					\item \texttt{ShiftRows}: Zyklischer Linksshift der Zeilen (erste 1, zweite 2, \dots)
+					\item \texttt{MixColums}: Spalten mit festem Polynom multiplizieren
+				\end{enumerate}
+			\item Entschlüsselung
+				\begin{itemize}
+					\item Gleiche Rundenschlüssel umgekehrt
+					\item \texttt{InvSubBytes}: inverse S-Boxen
+					\item \texttt{InvShiftRows}: Rechtsshift
+					\item \texttt{InvMixColumns}: Mult. mit inv. Polynom
+				\end{itemize}
+			\item Angriffe
+				\begin{itemize}
+					\item Differentielle und Lineare Kryptoanalyse nicht anwendbar
+					\item Saturation Attack: Chosen-Plaintext, nur bei verringerter Rundenzahl
+					\item Biclique Attack: Known-Plaintext, Teilberechnungen nutzen um Komplexität minimal zu reduzieren
+					\item Timing Attacks in MixColumns
+					\item Power Analysis kann mit fester Instruktionsreihenfolge verhindert werden
+				\end{itemize}
 		\end{itemize}
 	
 	\section{RSA-Verfahren}
 		\begin{itemize}
-			\item dummy
+			\item Schlüsselerzeugung
+				\begin{itemize}
+					\item Wähle Zufällig Primzahlen $p,q$ sodass $n=pq$ eine $k$-bit Zahl
+					\item Wähle $e$ mit $1<e<\phi (n)=(p-1)(q-1)$\\
+						und $gcd(e,\phi (n))=1$
+					\item Berechne $d$ mit $1<d<\phi (n)$ und\\
+						$de\;mod\;\phi (n)=1$
+					\item Schlüssel: $(n,e)$ bzw. $(n,d)$
+				\end{itemize}
+			\item $k$ groß, $e$ klein aber nicht zu klein
+			\item Enc: $c=t^e\;mod\;n$
+			\item Dec: $t=c^d\;mod\;n$
+			\item Schnelle Exponentiation: Schrittweise Quadrate aufmultiplizieren
+			\item Aufteilen der Nachricht in Blöcke und diese als Zahl interpretieren
+			\item Sicherheit
+				\begin{itemize}
+					\item RSA-Problem: Aus $n,e,c$ soll $t$ ermittelt werden
+					\item RSA-Schlüsselproblem: aus Public Key private berechnen
+					\item Von Faktorisierung von $n$ abhängig
+					\item Chosen-Plaintext möglich
+					\item Hastad (Low-Exponent): Aus $e$ Ciphertexten zu teilerfremden $n_i$ kann $t$ berechnet werden durch chin. Restsatz
+					\item Multiplikativer Homomorphismus
+				\end{itemize}
+			\item Padding
+				\begin{itemize}
+					\item Randomisiertes Padding OAEP
+					\item Erzeuge Padding und bilde Hash
+					\item XOR mit Plain, wieder hashen und XOR mit Padding
+					\item Padding kann bei Dec wieder rausgerechnet werden
+				\end{itemize}
 		\end{itemize}
 	
 	\section{Diffie-Hellmann und ElGamal}
 		\begin{itemize}
-			\item dummy
+			\item Primitivwurzel $g$ entspricht erzeugendem Element
+			\item Diskreter Logarithmus $a$ ist $A\equiv g^a\;mod\;p$
+			\item D-H-Schlüseltausch
+				\begin{enumerate}
+					\item A und B einigen sich auf Primzahl $p$ und Primitivwurzel $g$
+					\item Wählen Zahlen $a$ und $b$ und berechnen $A=g^a\;mod\;p$
+					\item Tauschen $A$ und $B$ aus
+					\item Berechnen $B^a\;mod\;p=g^{ab}\;mod\;p=K$
+				\end{enumerate}
+			\item $p$ muss hinreichend groß gewählt werden und bestimmte Bedingungen erfüllen
+			\item $g$ Primitivwurzel oder zumindest große Ordnung und $\leq p-2$
+			\item MitM Angriff möglich
+			\item ElGamal
+				\begin{enumerate}
+					\item Berechne $A=g^a\;mod\;p$\\
+						$\Rightarrow$ Pub. Key: $(p,g,A)$
+					\item Enc: $c=A^bm\;mod\;p$
+					\item Sende: $(B,c)$
+					\item Dec: $m=B^xc$ mit $x=p-1-a$
+				\end{enumerate}
+			\item Sicherheit
+				\begin{itemize}
+					\item Schwierigkeit basiert auf diskr. Log.
+					\item $b$ bei jeder Nachricht neu wählen, ansonsten Known-Plaintext
+					\item Multiplikativer Homomorphismus:\\
+						$c_2c_1^{-1}=m_2m_1^{-1}\Rightarrow m_2=c_2c_1^{-1}m_1\;mod\;p$ 
+					\item Chosen-Cipher entspricht multiplizieren eigener Nachricht und dann teilen
+				\end{itemize}
+			\item Cipher doppelt so lang wie Klartext
+			\item 2 Exponentiationen aber unabhängig von m $\Rightarrow$ effizienter
 		\end{itemize}
 	
 	\section{Hashfunktionen}
 		\begin{itemize}
-			\item dummy
+			\item Abbildung von beliebiger auf feste Länge
+			\item Kompressionsfunktion bildet von Länge $m$ auf $n$ ab und ist nie injektiv
+			\item Voraussetzungen
+				\begin{itemize}
+					\item Effiziente Berechenbarkeit
+					\item Urbildresistenz
+					\item Schwache Koll. Resistenz (kein zweites Urbild mit gleichem Hash)
+					\item Starke Koll. Resistenz (kein Paar)
+				\end{itemize}
+			\item Kompressionsfunktionen basieren auf Blockchiffren, alg. Strukturen oder Bitoperationen
+			\item Merkle-Damgard Konstruktion
+				\begin{itemize}
+					\item Initialisierungsvektor $IV$
+					\item Padding auf Vielfaches der Blocklänge
+					\item Schrittweise Berechnung des Hashes
+				\end{itemize}
+			\item SHA-1
+				\begin{itemize}
+					\item 160 bit Länge
+					\item Padding: 1, 0en bis $k*512-64$ dann Länge in 64 bit
+					\item 5 32-bit Zustands Wörter
+					\item Jeden Block als 16 32-bit Wörter schreiben und mehrere Bitoperationen zur Kompression verwenden
+					\item Hash ist finaler Zustand
+				\end{itemize}
 		\end{itemize}
 	
 	\section{Digitale Signaturen}
 		\begin{itemize}
-			\item dummy
+			\item Sichern Authentizität und Unabstreitbarkeit
+			\item Angriffsziele
+				\begin{itemize}
+					\item Universelle Fälschung (priv. Key)
+					\item Selektive Fälsch. (Sig. zu Msg.)
+					\item Existentielle Fälsch. (Finde Paar)
+				\end{itemize}
+			\item No-Message, Known-Message,\\
+				Chosen-Message Angriffe
+			\item Lamport-Diffie Einmal Signaturverfahren (LD-OTS)
+				\begin{itemize}
+					\item Schlüssel nur einmal verwenden
+					\item Schlüssel sind Matrizen mit $k$ Zeilen und $2k$ Spalten
+					\item Privater Key direkt generiert (Spaltenpaare)
+					\item Öffentlicher Schlüssel durch Anwendung von Hashfunktion $h$ auf Spalten
+					\item Generierung der Signatur durch Auswahl von Spalten des priv. Keys gemäß Nachricht
+					\item Überprüfung durch Hashen der Spalten und Vergleich mit pub. Key
+				\end{itemize}
+			\item RSA
+				\begin{itemize}
+					\item Erzeuge RSA-Modul $n=pq$
+					\item Wähle $e$ und berechne $d$
+					\item Pub: $(n,e)$, Priv: $d$
+					\item Signatur: $s=m^d\;mod\;n$
+					\item Testen: $m=^?s^e\;mod\;n$
+				\end{itemize}
+			\item No Message, Mult. Homomorph. Angriff
+			\item Merkle Verfahren
+				\begin{itemize}
+					\item Mehrere Einmal-Priv. Keys für einen Pub. Key
+					\item $N=2^H$ verifizierbare Signaturen
+					\item Wähle $N$ Einmal-Schlüsselpaare
+					\item Merkle-Hashbaum
+						\begin{itemize}
+							\item Blätter: Hashwerte der Ver. Keys
+							\item Inner: Hashwerte der Kombination der Kinder
+						\end{itemize}
+					\item Signierschlüssel: Folge der Priv. Keys
+					\item Ver. Key: Wurzel $R$ des Hashbaums
+					\item Signieren
+						\begin{itemize}
+							\item Index $i$ des verwendeten Keys
+							\item Signatur $S$
+							\item Authorisierungspfad für Verifikationsschlüssel (Hashes der Geschwisterknoten)
+						\end{itemize}
+					\item Prüfen
+						\begin{itemize}
+							\item Prüfe Einmal-Signatur mit geschicktem Test-Key
+							\item Prüfe Key durch Hashberechnung bis zur öffentlichen Wurzel
+						\end{itemize}
+				\end{itemize}
 		\end{itemize}
 	
 	\section{Public-Key-Infrastrukturen}
 		\begin{itemize}
-			\item dummy
+			\item Zertifikate Bestätigen Zugehörigkeit von Schlüsseln
+			\item Inhalt: Aussteller, Gültigkeit, Inhaber, Key, Signatur
+			\item Certification Authority stellt Certs aus
+			\item Registration Authority Identifiziert Nehmer
+			\item Validitation Authority stellt Dienste zur Überprüfung
+			\item Domain (Besitzer) / Organization (Identität) Validation
+			\item Extended Validation: Erweiterte Überprüfung
+			\item Zertifikatsketten bis zur Root CA (self signed)
+			\item Cross-Zertifizierung / Bridge-CAs
+			\item Kompromittierte CA macht alle Zertifikate unterhalb ungültig
+			\item Web of Trust
+				\begin{itemize}
+					\item Teilnehmer zertifizieren sich gegenseitig
+					\item Schlüssel in Schlüsselservern
+				\end{itemize}
 		\end{itemize}
 	
 	\section{Primzahlerzeugung}
 		\begin{itemize}
-			\item dummy
+			\item Euklidischer Algorithmus zur Bestimmung des gcd
+				\begin{itemize}
+					\item Teile Größere Zahl mit Rest durch Kleinere
+					\item Setze Größere = Kleinere und Kleinere = Rest bis Kleinere = 0
+				\end{itemize}
+			\item Probedivision
+				\begin{itemize}
+					\item Teile $n$ durch alle Primzahlen $p<\sqrt{n}$
+					\item Falls $p$ restlos teilt $\Rightarrow$ zusammengesetzt
+				\end{itemize}
+			\item Sieb des Eratosthenes
+			\item Sätze
+				\begin{itemize}
+					\item  Kleiner Fermat: $a^p\equiv a\;mod\;p$
+					\item $\varphi(n)$: Anzahl aller kleineren teilerfremden Zahlen
+					\item Fermat-Euler: $n\geq2$ und $a\in\Z$ teilerfremd $\Rightarrow a^{\varphi(n)}\equiv1\;mod\;n$
+					\item Wenn $x^2\equiv1\;mod\;p$ dann gilt $x\equiv1$ oder $x\equiv-1$
+					\item Fermat-Miller
+						\begin{itemize}
+							\item $p$ prim und $a$ teilerfremd
+							\item Setze $p-1=d*2^s$
+							\item Entweder $a^d\equiv1$ oder\\
+								$\exists i\leq s-1(a^{d*2^i}\equiv-1)$ 
+						\end{itemize}
+				\end{itemize}
+			\item Fermat-Test
+				\begin{enumerate}
+					\item Wähle Basis $a\in\Z$
+					\item Falls $gcd(a,n)\neq1$ zusammengesetzt
+					\item Verwende Satz von Fermat-Euler mit $\varphi(n)=n-1$
+					\item Wenn Ergebnis nicht 1 dann zusammengesetzt
+					\item Sonst wahrscheinlich prim
+				\end{enumerate}
+			\item Pseudoprimzahlen erfüllen für teilerfremdes $a$: $a^{n-1}\equiv1$
+			\item $\Rightarrow$ für mehrere Basen testen
+			\item Carmichael-Zahlen besitzen keine geeignete Basis
+			\item Miller-Rabin Test
+				\begin{enumerate}
+					\item Schreibe $n-1=d*2^s$und wähle $a$ zwischen 1 und $n-1$ 
+					\item Wenn $gcd(a,n)\neq1$ ist $n$ zusammengesetzt
+					\item Berechne $b=a^d\;mod\;n$ (wenn 1, dann prim)
+					\item Berechne $b,b^2,\dots,b^{2^{s-1}}$
+					\item Wenn kein b gleich -1 dann zusammengesetzt
+				\end{enumerate}
+			\item Keine starken Carmichael Zahlen aber starke Pseudoprimzahlen
+			\item Irrtumswahrscheinlichkeit $\frac{1}{2}$
+			\item Erzeugung: zufällige $n$-stellige Zahl, erst Probedivision, dann t-mal Miller-Rabin
 		\end{itemize}
 	
 	\section{Identifikationsmechanismen}
 		\begin{itemize}
-			\item dummy
+			\item Garantieren Zugriffskontrolle und Zurechenbarkeit
+			\item Person = Identität?
+			\item Proofer vs. Verifier
+			\item Körperliche Merkmale, Besitz, Wissen
+			\item Passwörter
+				\begin{itemize}
+					\item Hashvergleich
+					\item Wörterbuchangriff
+				\end{itemize}
+			\item Sicherer Kanal, sichere Hashspeicherung
+			\item Einmal Passwörter (evtl. mit Funktion)
+			\item Public-Key-Challenge-Response: Proofer signiert Zufallszahl
+			\item Zero-Knowledge: Vollständigkeit, Zuverlässigkeit, Zero-Knowledge
+			\item Mit wahrscheinlichkeit $\varepsilon$ falsche Proofer ablehnen
+			\item Ali-Babas-Cave
+			\item Fiat-Shamir
+				\begin{itemize}
+					\item RSA-Modul $n=pq$
+					\item Priv. Key: $s\in\Z_n$
+					\item Pub. Key: $v=s^2\;mod\;n$
+					\item Commitment: Proofer schickt $x=r^2\;mod\;n$
+					\item Challenge: Verifier wählt $e\in\Z_2$
+					\item Response: $y=r*s^e$
+					\item Verifier prüft: $y^2=xv^e\;mod\;n$
+				\end{itemize} 
+			\item Simulation erzeugt gleiches Transkript $\Rightarrow$ perfektes Z-K Protokoll
+			\item Bei Wiederverwendung von $r$ mit verschiedenen $e$ kann privater Schlüssel durch Division errechnet werden
 		\end{itemize}
 	
 	\section{Elliptische Kurven}
 		\begin{itemize}
-			\item dummy
+			\item 
 		\end{itemize}
 
 
