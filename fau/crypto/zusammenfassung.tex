@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 
 \usepackage[T1]{fontenc}
+\usepackage{mathpazo}
 
 \usepackage{geometry}
 
@@ -16,7 +17,7 @@ headsep=5mm, footskip=12mm}
 \title{\vspace{-1.25cm}Zusammenfassung Crypto\vspace{-0.25cm}}
 \date{\vspace{-5ex}}
 
-
+\newcommand*{\Z}{\mathbb{Z}}
 
 \begin{document}
 	\maketitle
@@ -76,22 +77,130 @@ headsep=5mm, footskip=12mm}
 	
 	\section{Affin lineare Blockchiffren}
 		\begin{itemize}
-			\item dummy
+			\item Symmetrisch, deterministisch, konstante Blocklänge
+			\item Blocklänge $n$ und Alphabetlänge $m$
+			\item Schlüssel $K$ besteht aus Teilen $a$ und $b$
+			\item Verschlüsselung: $C_i=(a*P_i+b)\;mod\;m$
+			\item Entschlüsselung: $P_i=((C_i-b)*a')\;mod\;m$
+			\item Sonderfälle
+				\begin{itemize}
+					\item $a=1$: additiv (Shift, Caesar)
+					\item $b=0$: multiplikativ (Substitution)
+				\end{itemize}
+			\item Affine Chiffre
+				\begin{itemize}
+					\item Blocklänge $n=1$
+					\item Schlüssel: $K=(a,b)\in \Z_m^2$
+					\item $a$ und $m$ teilerfremd ($gcd(a,m)=1$)
+					\item $a'$ ist inverses Element zu $a\;mod\;m$ und kann mit erweitertem eukl. Alg. berechnet werden
+					\item Es gilt $a*a'=1\;mod\;m$
+				\end{itemize}
+			\item Angriffe auf affine Chiffre
+				\begin{itemize}
+					\item Häufigkeitsanalyse
+					\item Ciphertext-Only möglich, da kleiner Schlüsselraum
+					\item Known-Plaintext: aus zwei Klartext und Ciphertext Elementen kann Schlüssel berechnet werden
+				\end{itemize}
+			\item Affin lineare Blockchiffre
+				\begin{itemize}
+					\item Schlüsselraum: $(A,\vec{b})\in \Z_m^{(n,n)}\times \Z_m^n$
+					\item Wobei $gcd(det\;A,m)=1$
+					\item Enc: $A\vec{x}+\vec{b}\;mod\;m$
+					\item Dec: $A'(\vec{x}-\vec{b})$
+					\item $A'=(a'*adj\;A)\;mod\;m$\\
+						mit $a'$ mult. Inv. von $det\;A\;mod\;m$
+				\end{itemize}
+			\item Known-Plaintext mit zwei Blockpaaren immer noch möglich
 		\end{itemize}
 	
 	\section{Perfekte Geheimhaltung}
 		\begin{itemize}
-			\item dummy
+			\item Mit beliebig viel Ressourcen ist Klartext ohne Schlüssel nicht Aus Ciphertext rekonstruierbar
+			\item Schlüsseltext darf keine Infos Wahrscheinlichkeiten) über Klartext verraten
+			\item Computational (Beweis, dass bester Alg. langsam), Provable (Reduktion) und Heuristic (keine einfache Lösung bekannt) security
+			\item Schlüssel- und Klartext stoch. unabh.\\
+				$\forall p\in P, \forall c\in C:\;Pr(p|c)=Pr(p)$
+			\item Bzw.: $Pr(p)*Pr(c|p)=Pr(p\cap c)=$\\
+				$=Pr(c)*Pr(p|c)$
+			\item Jeder Schlüssel genau einmal verwendet
+			\item Prefekt geheim $\Leftrightarrow$\\
+				$\forall (p_0,p_1)\in P, \forall c\in C:\;Pr(c|p_0)=Pr(c|p_1)$
+			\item Wahrscheinlichkeit für bestimmten Schlüssel unabhängig vom Klartext
+			\item Satz von Shannon: Perfekt geheim $\Leftrightarrow$ Schlüsselraum gleichverteilt und für jeden p und c genau ein k
+			\item Vigenere Chiffre $c_i \equiv p_i+k_i\;mod\;26$
+				\begin{itemize}
+					\item Cäsar: Periode 1
+					\item Beaufort: $c_i\equiv k_i-p_i\;mod\;26$
+					\item Vernam (OTP)\\
+						Schlüssellänge = Nachrichtlänge
+					\item Compound Vigenere
+				\end{itemize}
+			\item OTP ist perfekt geheim
+			\item Mehrfache Schlüsselverwendung angreifbar:\\
+				XOR der Ciphert. ergibt XOR der Plaint.
+			\item Immun gegen Ciphertext-only, Chosen Plain-/Ciphertext und Known Plaintext
+			\item Substitution-Angriff
+				\begin{itemize}
+					\item Je 2 bit Schlüssel und Cipher, 1 bit Plain
+					\item Angreifer kann Ciphertext garantiert flippen
+					\item $\Rightarrow$ Permutation der Ciphertexte liefert perfekte Authentizität
+				\end{itemize}
 		\end{itemize}
 	
 	\section{DES-Algorithmus}
 		\begin{itemize}
-			\item dummy
+			\item Feistel-Chiffren
+				\begin{itemize}
+					\item Binäre Blockchiffre mit Länge $2t$
+					\item Rundenzahl $r\geq 1$ mit entsprechenden Rundenschlüsseln
+					\item Aufteilen in $p=(L_0,R_0)$
+					\item Enc.: $(L_i,R_i)=(R_{i-1},L_{i-1}\oplus f_{K_i}(R_{i-1}))$
+					\item Dec.: $(R_{i-1},L_{i-1})=(L_i,R_i\oplus f_{K_i}(L_i))$
+				\end{itemize}
+			\item DES
+				\begin{itemize}
+					\item Blocklänge $2t=64$, Runden $r=16$
+					\item Schlüssel $K$ der Länge 64, in 8 Byte aufgeteilt
+					\item Je letztes bit für ungerade Quersumme des Bytes
+				\end{itemize}
+			\item Algorithmus
+				\begin{enumerate}
+					\item Initiale Permutation $IP$ auf $p$ anwenden
+					\item 16 Runden Feistel-Chiffre
+					\item Inverse Permutation $IP^{-1}$\\
+						$c=IP^{-1}(R_{16},L_{16})$
+				\end{enumerate}
+			\item Rundenschlüssel
+				\begin{itemize}
+					\item Generierung von 16 48-bit Schlüsseln aus 64-bit Schlüssel
+					\item $(C_0,D_0)=PC1(k)$
+					\item $C_i$ / $D_i$ entstehen durch Linksshift um 1 oder 2 bits aus vorherigem Wert
+					\item $K_i=PC2(C_i,D_i)$
+				\end{itemize}
+			\item f-Funktion
+				\begin{itemize}
+					\item Expansionsfunktion verlängert von 32 auf 48 bit 
+					\item $E(R)\oplus K$ bilden und in 8 Blöcke der Länge 6 aufteilen
+					\item S-Boxen verkürzen Blöcke auf Länge 4\\
+						$C_i=S_i(B_i)$
+					\item S-Boxen sind Matrizen (Bit 0 und 6 als Zeile, Rest Spalte) und verhindern affin-linear
+					\item Abschliessend noch Permutation
+				\end{itemize}
+			\item Sicherheit
+				\begin{itemize}
+					\item Triple-DES (EDE) noch sicher
+					\item Brute-Force (Known-Plaintext) auf Schlüssel
+					\item Lineare Kryptoanalyse (Known-P) schwer wegen S-Boxen
+					\item Differentielle Kryptoanalyse komplexer als Brute-Force
+				\end{itemize}
 		\end{itemize}
 	
 	\section{AES-Algorithmus}
 		\begin{itemize}
-			\item dummy
+			\item Schlüssellänge 128, 192 oder 256
+			\item Blocklänge 128
+			\item Bytes und Wörter als Polynom interpretiert
+			\item Interner Zustand enthält $4*Nb=16$ Bytes (Spaltenweise)
 		\end{itemize}
 	
 	\section{RSA-Verfahren}
