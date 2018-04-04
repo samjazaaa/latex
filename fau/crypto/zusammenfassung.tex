@@ -23,10 +23,40 @@ headsep=5mm, footskip=12mm}
 	\maketitle
 
 
-	%\section{Allgemeine Kryptosysteme}
-	%	\begin{itemize}
-	%		\item 
-	%	\end{itemize}
+	\section{Allgemeine Kryptosysteme}
+		\begin{itemize}
+			\item Krypto Schutzziele
+				\begin{itemize}
+					\item Vertraulichkeit (Empfänger)
+					\item Integrität (Inhalt)
+					\item Authentizität (Sender)
+				\end{itemize}
+			\item Kryptosystem $(P,C,K,E,D)$
+				\begin{itemize}
+					\item $P$ Klartextraum
+					\item $C$ Ciphertextraum
+					\item $K$ Schlüsselraum
+					\item $E=\{E_k:k\in K\}$ Verschlüsselungsfunktionen
+					\item $D$ Entschlüsselungsfunktionen
+				\end{itemize}
+			\item Symmetrische Systeme
+				\begin{itemize}
+					\item Nur ein Schlüssel, schneller
+					\item Schlüsselaustausch und Geheimhaltung nötig
+				\end{itemize}
+			\item Asymmetrische Systeme
+				\begin{itemize}
+					\item  Kein Schlüsselaustausch nötig, höhere Sicherheit
+					\item Langsamer, Anzahl der Keys
+				\end{itemize}
+			\item Angriffsarten
+				\begin{itemize}
+					\item Ciphertext-Only
+					\item Known-Plaintext (Angreifer kennt P-C Paare)
+					\item Chosen-Plaintext (Angreifer wählt P)
+					\item Chosen-Ciphertext (Angreifer kann Cs entschlüsseln lassen)
+				\end{itemize}
+		\end{itemize}
 
 	\section{Blockchiffren}
 		\begin{itemize}
@@ -487,7 +517,19 @@ headsep=5mm, footskip=12mm}
 	
 	\section{Elliptische Kurven}
 		\begin{itemize}
-			\item 
+			\item Benötigt im Verhältnis zu \glqq{}klassischer\grqq{} Crypto für gleiche Sicherheit kürzere Schlüssel
+			\item EC: $y^2=x^3+ax+b$
+			\item Kurve über Primkörper definieren um Kommazahlen zu vermeiden
+			\item Addition
+				\begin{itemize}
+					\item $P+0=P$
+					\item $P+(-P)=0$
+					\item Ansonsten $\lambda$ berechen, je nachdem ob $P_1=P_2$
+					\item Dann Formel für $x_3$ und $y_3$
+				\end{itemize}
+			\item Multiplikation als Reihe von Additionen
+			\item Nicht alle EC sind sicher $\Rightarrow$ Vertrauen in Anbieter
+			\item Seitenkanalattacken möglich
 		\end{itemize}
 
 
