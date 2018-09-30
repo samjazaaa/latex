@@ -14,7 +14,7 @@ headsep=5mm, footskip=12mm}
 
 \pagenumbering{gobble}
 
-\title{\vspace{-1.25cm}Zusammenfassung SEH\vspace{-0.25cm}}
+\title{\vspace{-1.25cm}SEH summary\vspace{-0.25cm}}
 \date{\vspace{-5ex}}
 
 \newcommand*{\Z}{\mathbb{Z}}
@@ -23,11 +23,144 @@ headsep=5mm, footskip=12mm}
 	\maketitle
 
 
-	\section{Platzhalter}
+	\section{Introduction}
 		\begin{itemize}
-			\item Platzhalter
+			\item Dependable systems
+				\begin{itemize}
+					\item Attributes / Goals (what)
+						\begin{itemize}
+							\item Confidentiality (no unauthorized disclosure)
+							\item Integrity (absence of improper states)
+							\item Availability (possibility in nines)
+							\item Reliability (mean time to failure)
+							\item Safety (consequences for user)
+							\item Maintainability
+						\end{itemize}
+					\item Means (how)
+						\begin{itemize}
+							\item Fault Prevention
+							\item Fault Tolerance
+							\item Fault Removal
+							\item Fault Forecasting
+						\end{itemize}
+					\item Threats (against)
+						\begin{itemize}
+							\item Faults
+							\item Errors (state)
+							\item Failures (interface behavior)
+						\end{itemize}
+				\end{itemize}
+			\item Risk management
+			\item Safety (protect people) vs. Security (CIA)
+			\item Authentication (integrity of source, matching identity with entity)
+			\item Non-reputability (prevent denial)
+			\item Anonymity
 		\end{itemize}
 
+
+	\section{Attack Scenarios in General}
+		\begin{itemize}
+			\item Types of flaws (security faults)
+				\begin{itemize}
+					\item intentional malicious (trojan)
+					\item intentional non-malicious (debug interface)
+					\item inadvertent (software bug)
+				\end{itemize}
+			\item Attacker classes
+				\begin{itemize}
+					\item Clever outsider (low resources)
+					\item Knowledgeable Insiders (medium resources, big money)
+					\item Funded Organizations (high, mafia, also non-technical)
+				\end{itemize}
+			\item Attack categories
+				\begin{itemize}
+					\item inv. log.: code injection
+					\item inv. phys.: damaging, microprobing
+					\item non. log.: phish, crypto, copying
+					\item non. phys.: eavesdropping, side-channel
+				\end{itemize}
+			\item Attacks and Countermeasures on different hw / sw abstraction levels
+			\item Attack scenarios
+				\begin{itemize}
+					\item Malicious software / firmware update
+					\item Malicious program installation
+					\item Reverse engineering (implementation details, vulnerabilities, IP)
+					\item Modifying integrated circuit (read memory by cutting jump signal and bus probing)
+					\item Phishing (social)
+					\item Forged authenticity (DNS / cert spoof, systems)
+					\item Crypto attacks
+					\item Eavesdropping (prevented by encryption)
+					\item Side-channel attacks (timing, power, fault)
+				\end{itemize}
+		\end{itemize}
+
+	\section{Attack Scenarios Cryptography}
+		\begin{itemize}
+			\item Cryptography (designing) vs. Cryptoanalysis (breaking) vs. Cryptology (both)
+			\item Block ciphers vs. Stream ciphers
+			\item Monoalphabetic substitution ciphers (bad because of probability)
+			\item Vigenère (key repeatedly added to plain)
+			\item One-Time Pad (same length as plain)
+			\item symmetric vs. asymmetric methods
+			\item DES
+				\begin{itemize}
+					\item 56 bit key, 64 bit block
+					\item 16 Feistel rounds: expansion, substitution, permutation
+					\item Brute forcable (Deep Crack, COPACOBANA: 65 billion key/sec) $\Rightarrow$ max 12 days
+					\item Triple-DES (enc,dec,enc) $\Rightarrow$ 168 (eff:112) bit key
+				\end{itemize}
+			\item AES (Rijndael)
+				\begin{itemize}
+					\item 128 (10) / 192 (12) / 256 (14) bit keys (rounds)
+					\item 128 bit block
+					\item 256 byte S-Box
+					\item Key Expansion, Initial Round, Rounds, Final Round
+					\item Round (work on square state)
+						\begin{itemize}
+							\item SubByte (S-Box)
+							\item ShiftRows (circular, increasing)
+							\item MixColumn (polynom)
+							\item AddRoundKey
+						\end{itemize}
+				\end{itemize}
+			\item RSA
+				\begin{itemize}
+					\item factorizing as one way function
+					\item Large primes $p$ and $q$
+					\item $N_1 = p*q$, $N_2=(p-1)*(q-1)$
+					\item $e$ such that $gcd(N_2,e) = 1$ and $0<e<N_2$
+					\item $d$ such that $d*e\;mod\;N_2=1$
+					\item Enc: $c\equiv m^e\;mod\;N_1$
+					\item Dec: $m \equiv c^d\;mod\;N_1$
+					\item DES 100 (sw) / 10000 (hw) times faster
+					\item Used to encrypt session key for symmetric methods
+				\end{itemize}
+		\end{itemize}
+
+	\section{Code Injection Attacks}
+		\begin{itemize}
+			\item 
+		\end{itemize}
+
+	\section{Invasive physical attacks}
+		\begin{itemize}
+			\item 
+		\end{itemize}
+
+	\section{Non invasive logical attacks}
+		\begin{itemize}
+			\item 
+		\end{itemize}
+
+	\section{Non invasive physical attacks}
+		\begin{itemize}
+			\item 
+		\end{itemize}
+
+	\section{Automotive case study}
+		\begin{itemize}
+			\item 
+		\end{itemize}
 
 
 \end{document}
