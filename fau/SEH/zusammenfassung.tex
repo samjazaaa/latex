@@ -230,19 +230,39 @@ headsep=5mm, footskip=12mm}
 						\end{itemize}
 					\item Library Support
 						\begin{itemize}
-							\item 
+							\item Use of safer functions (strlcpy, SafeStr lib, FormatGuard lib)
+							\item Problem modification of code
+							\item libsafe and libverify: transparent dynamic link libs
+							\item libsafe intercepts vulnerable calls and replaces them
+							\item libverify uses binary rewriting to verify stack pointer (also canaries)
+							\item ContraPolice: modifies alloc and free of heap with canaries
 						\end{itemize}
 					\item OS Support
 						\begin{itemize}
-							\item 
+							\item Marking stack non-executable (NX flag)
+							\item Kernel extension PaX and Exec Shield
+							\item $W\oplus X$ protection
+							\item Drawbacks: functional languages, ROP
 						\end{itemize}
 					\item Control Flow Checking
 						\begin{itemize}
-							\item 
+							\item Checking sequences of program counter values
+							\item Software Implemented Hardware Fault Tolerance (SIHFT)
+							\item Control blocks between basic blocks preventing wrong jumps
+							\item Watchdog Processor: program derived from cf-graph or function-graph
+							\item Uses signatures (e.g. start address) for each node
+							\item Embedded (ESM) vs. autonomous (ASM) Signature Monitoring
+							\item ESM: signatures stored between basic blocks and transfered while execution
+							\item ASM: signatures stored in watchdog, cfg mapped to control program
 						\end{itemize}
 					\item ASM approach
 						\begin{itemize}
-							\item 
+							\item Needed: current pc, next pc, correct jump targets + sources
+							\item direct jumps: source + target, indirect: only source, interrupts: only target
+							\item Control Flow Method (CF): basic blocks as nodes
+							\item CF Instruction Method (CFI): cf instructions as nodes
+							\item Components: Memory, CF-Checker, Extensions (modular concept)
+							\item Small area overhead, fast error detection, no performance impact
 						\end{itemize}
 				\end{itemize}
 
