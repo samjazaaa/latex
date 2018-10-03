@@ -139,7 +139,113 @@ headsep=5mm, footskip=12mm}
 
 	\section{Code Injection Attacks}
 		\begin{itemize}
-			\item 
+			\item Von Neumann concepts
+				\begin{itemize}
+					\item memory, control unit (control path), arithmetic and logic unit  (data path)
+					\item Instruction fetch, decode, read operand, execute, write result
+					\item Sequential execution vs. Pipelining
+					\item Leon3 as example: 7 stages pipeline, MMU, seperate caches
+				\end{itemize}
+			\item Code Injection Attacks in general
+				\begin{itemize}
+					\item Insert routine (mostly embedded into input) and finding its address
+					\item Manipulating program flow to execute it (overflows, return into libc, pointer)
+				\end{itemize}
+			\item Control Flow Graph
+				\begin{itemize}
+					\item Basic Block: sequence without jumps or branches
+					\item Beginnings: first instruction, jump targets, instructions after jump / branch
+					\item Control Flow Graph CFG(BB,T), where BB basic blocks and T transitions
+				\end{itemize}
+			\item Stack-based Buffer Overflows
+				\begin{itemize}
+					\item Return address first entry after function call, then base pointer
+					\item Write (shell)code into buffer and overwrite return pointer
+					\item Overwriting the framepointer also can do the job
+				\end{itemize}
+			\item Heap-based Buffer Overflows
+				\begin{itemize}
+					\item Unlink macro merges boarded segments
+					\item next-Pointer can be overwritten with 'return - 3' and prev with beginning of code
+					\item Unlinking will overwrite the return with the beginning of the code
+				\end{itemize}
+			\item Arc injection - ret2libc / ROP
+				\begin{itemize}
+					\item Inserting new control flow transpher
+					\item Redirect return to libc function call (system)
+					\item Returning to gadgets with returns (followed by their args)
+					\item Gadgets are found in libraries and through miss-alignment
+				\end{itemize}
+			\item Pointer Subterfuge
+				\begin{itemize}
+					\item Function pointer clobbering: modify function pointer of virtual function
+					\item Data pointer manipulation: arbitrary memory writes
+					\item Exception handler hijacking: overwrite list of registered exception handlers
+					\item Virtual pointer smashing: modifying virtual pointer to point to own virtual function table
+				\end{itemize}
+			\item Hardware Code Injection
+				\begin{itemize}
+					\item Partial bitfiles in FPGAs / Trojan cores in ASICs
+					\item Adding a malicious core to gather data / do evil shit
+				\end{itemize}
+			\item Countermeasures
+				\begin{itemize}
+					\item Additional Return Stack
+						\begin{itemize}
+							\item Additional hardware return stack (SRAS)
+							\item Problems: multi-tasking, interrupts, setjmp / longjmp
+							\item Solutions: additional instructions, SmashGuard searches for longjmp returns
+						\end{itemize}
+					\item Address Obfuscation
+						\begin{itemize}
+							\item Randomize stack and heap addresses and location of shared libs / static data
+							\item XORing function pointers with randomly assigned key
+						\end{itemize}
+					\item Software Encryption
+						\begin{itemize}
+							\item Instructions are stored encrypted
+							\item During fetch they get decoded (each process has own key)
+						\end{itemize}
+					\item Safe Languages
+						\begin{itemize}
+							\item Cyclone: static and dynamic checks, avoidsoverflow and format string
+							\item CCured (source-source translator): static + dynamic, need library wrappers
+							\item Static analyzers: Splint, PREfix, ITS4 (heuristics and annotations)
+							\item Dynamic Code analyzers: Rational Purify, STOBO, FIST (test pot. malicious inputs)
+						\end{itemize}
+					\item Anomaly Detection
+						\begin{itemize}
+							\item Compare behavior to profile (defined vs. learned)
+							\item Approach: monitor syscalls
+						\end{itemize}
+					\item Compiler Support
+						\begin{itemize}
+							\item StackGuard: canary word between vars and return address
+							\item ProPolice: also protects registers (SSP)
+							\item Stack Shield: redundand return address in data segment
+							\item Return Address Defender: copies of return pointers stored in data segment, surrounded by mines
+							\item PointGuard: pointers are stored encrypted
+							\item XFI: static analysis and inline guards through binary rewriting, dual stacks
+							\item Out-of-bound pointers: redirected to out of bounds object
+						\end{itemize}
+					\item Library Support
+						\begin{itemize}
+							\item 
+						\end{itemize}
+					\item OS Support
+						\begin{itemize}
+							\item 
+						\end{itemize}
+					\item Control Flow Checking
+						\begin{itemize}
+							\item 
+						\end{itemize}
+					\item ASM approach
+						\begin{itemize}
+							\item 
+						\end{itemize}
+				\end{itemize}
+
 		\end{itemize}
 
 	\section{Invasive physical attacks}
