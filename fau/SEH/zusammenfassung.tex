@@ -332,28 +332,61 @@ headsep=5mm, footskip=12mm}
 					\item Key Retrieval using Test Modes: Re-enable test routines by bridging fuses (probe)
 					\item KR using ROM Overwriting
 						\begin{itemize}
-							\item 
-						\end{itemize}
-					\item KR using ROM Overwriting
-						\begin{itemize}
-							\item 
+							\item Setting bits with FIB or laser cutter
+							\item Alternation of instructions to disclosure the key
+							\item Reduce rounds or alter S-Boxes
 						\end{itemize}
 					\item KR using EEPROM overwriting
 						\begin{itemize}
-							\item 
+							\item (Un)setting easier than reading
+							\item Setting key bits via micro-probing and checking output
 						\end{itemize}
 					\item KR using Gate Destruction
 						\begin{itemize}
-							\item 
+							\item Harm gates in registers to produce constant bits
+							\item DES: rounds through shifting
+							\item If one bit is stuck, key bits can be recovered
 						\end{itemize}
 					\item KR using Memory Remanence
 						\begin{itemize}
-							\item 
+							\item DRAM and SRAM keep content after power down for short time
+							\item Increased by cooling
 						\end{itemize}
 					\item KR by Probing Single Bus Bits
 						\begin{itemize}
-							\item 
+							\item Reading address bit by micro-probing or EBT
+							\item Recoverable: RSA exponents, DES key bits with different ciphers
 						\end{itemize}
+				\end{itemize}
+			\item Countermeasures
+				\begin{itemize}
+					\item Robust Low-frequency Sensor
+						\begin{itemize}
+							\item Bus observation by EBT requires low frequency
+							\item Sensor activates reset on low frequencies
+							\item Problems: sensor can be destroyed, clock under control of attacker
+							\item Solution: only lower reset after sensor self test, circuit works only with reset
+						\end{itemize}
+					\item Destruction of Test Circuitry
+						\begin{itemize}
+							\item Fuses can be reconnected by attacker
+							\item Better place test circuitry between chips so they get removed entirely
+						\end{itemize}
+					\item Restricted Program Counter
+						\begin{itemize}
+							\item Watchdog resets PC if no jump for long time
+							\item Problem: area, can be disabled with FIB
+							\item Replace PC with segment register S and offset counter O
+							\item If O overflows reset; switching S through jumps / branches
+						\end{itemize}
+					\item Top-Layer Sensor Meshes
+						\begin{itemize}
+							\item Additional metalization layer that is monitored for interrupts
+							\item Destruction triggers countermeasures
+							\item Makes preparation for layer reconstruction and microprobing harder
+							\item FIB still possible and can create a pad for microprobing
+						\end{itemize}
+					\item IP Watermarking in layout / higher levels
 				\end{itemize}
 
 		\end{itemize}
