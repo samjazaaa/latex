@@ -270,7 +270,92 @@ headsep=5mm, footskip=12mm}
 
 	\section{Invasive physical attacks}
 		\begin{itemize}
-			\item 
+			\item Compromised security goals
+				\begin{itemize}
+					\item Availability: damaging, cutting wires
+					\item Confidentiality: recover sensitive data / implementation details
+					\item Integrity: Manipulation of circuits / data
+				\end{itemize}
+			\item Attacks need special equipment and time
+			\item Depacking
+				\begin{itemize}
+					\item Opening chip package or removing plastic card
+					\item Heating and use of chemicals
+				\end{itemize}
+			\item Layer Reconstruction
+				\begin{itemize}
+					\item Creating map of the chip
+					\item Using optical microscope to get mosaics of chip surface
+					\item Stripping of metal layers with acid
+					\item Standard architectures / cells help identifying components
+					\item Reading out ROM contents
+					\item Constructing a netlist for understanding and finding weaknesses
+					\item Layout can be used to clone product
+				\end{itemize}
+			\item Manual Micro-probing
+				\begin{itemize}
+					\item Probe shaft thickness about $10\mu m$, tip $< 0.1 \mu m$
+					\item Recording values / overwriting signals
+					\item Removing the passivation layer with a laser cutter
+				\end{itemize}
+			\item Advanced Beam Technologies
+				\begin{itemize}
+					\item Focused Ion Beam
+						\begin{itemize}
+							\item Vacuum chamber and particle gun (gallium)
+							\item Scanning structures down to 5nm
+							\item Detecting secondary particles (ions and electrons)
+							\item Removing material with higher currents
+							\item Gas-assisted etch: up to 12 times deeper
+							\item Navigate using laser interferometer stages
+							\item Microprobing deeper signal lines by drilling holes and creating pads
+						\end{itemize}
+					\item Electron Beam Tester
+						\begin{itemize}
+							\item Scanning Electron Microscope with voltage-contrast function
+							\item Energy of secondary electrons corresponds to electric field
+							\item Observing signals if clock is below 100 kHz
+						\end{itemize}
+					\item Infrared Laser
+						\begin{itemize}
+							\item Scanning with infrared laser from rear (silicon transparent)
+							\item Photon current corresponds to internal states of transistors
+						\end{itemize}
+				\end{itemize}
+			\item Key and Memory Reading
+				\begin{itemize}
+					\item Reading out ROM contents (layer reconstr., EBT)
+					\item Reading RAM content by bus probing (micro porbe, EBT)
+					\item Replaying memory transactions by overwriting signals
+					\item Checking checksums leaks information
+					\item Generating linear memory trace by cutting jump / branch signals
+					\item Key Retrieval using Test Modes: Re-enable test routines by bridging fuses (probe)
+					\item KR using ROM Overwriting
+						\begin{itemize}
+							\item 
+						\end{itemize}
+					\item KR using ROM Overwriting
+						\begin{itemize}
+							\item 
+						\end{itemize}
+					\item KR using EEPROM overwriting
+						\begin{itemize}
+							\item 
+						\end{itemize}
+					\item KR using Gate Destruction
+						\begin{itemize}
+							\item 
+						\end{itemize}
+					\item KR using Memory Remanence
+						\begin{itemize}
+							\item 
+						\end{itemize}
+					\item KR by Probing Single Bus Bits
+						\begin{itemize}
+							\item 
+						\end{itemize}
+				\end{itemize}
+
 		\end{itemize}
 
 	\section{Non invasive logical attacks}
