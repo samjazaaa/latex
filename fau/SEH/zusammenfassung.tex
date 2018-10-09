@@ -393,17 +393,352 @@ headsep=5mm, footskip=12mm}
 
 	\section{Non invasive logical attacks}
 		\begin{itemize}
-			\item 
+			\item Gathering information without altering the system
+			\item Authenticity Forging
+				\begin{itemize}
+					\item Phishing
+						\begin{itemize}
+							\item Uses social engineering to gain trust
+							\item Fake Webistes, Emails, IMs, SMS
+						\end{itemize}
+					\item DNS spoofing
+					\item Certificate Spoofing
+				\end{itemize}
+			\item Exploiting cryptographic weaknesses
+				\begin{itemize}
+					\item Too small keys can be cracked by brute force (e.g. DES)
+					\item Wrong cryptographic design (WEP)
+					\item Stream cipher simulates one-time pad by generating a keystream
+					\item WEP: 40 bit (easy) vs. 104 bit (no bruteforce) keysize
+					\item Wireless: Frames get lost and PRNG restarted for each frame
+					\item Small key size because of 24 bits IV (also reused)
+				\end{itemize}
+			\item Copying
+				\begin{itemize}
+					\item Copying of sensitive data, e.g. Intellectual Property (IP)
+					\item Confidentiality compromised
+					\item Copying of Programs / IP Cores is easy
+					\item Register Transfer Level (hdl), Logic Level (netlist), Ciruit Level (bitfile)
+				\end{itemize}
+			\item Overview of countermeasures
+				\begin{itemize}
+					\item Social protection (law, copyrigth)
+					\item Reactive protection (no prevention but detection)
+					\item Active protection (physical / crypto, highest deterrent degree)
+					\item Social protection sometimes hard for smaller companies
+				\end{itemize}
+			\item Encryption (active)
+				\begin{itemize}
+					\item Instructions stored encrypted
+					\item Decrypt during fetch (HW) or while loading into memory
+					\item Goals: prevent unauthorized use or modification
+					\item Encrypted HDL / netlists: design tools decrypt before usage
+						\begin{itemize}
+							\item Problem: different EDA tools must enrypt result again
+							\item Protection of EDA tools against read-out attacks
+							\item No industrial standard for encrypted IP core
+							\item Keyhandling
+								\begin{itemize}
+									\item Symmetric (AES): tools must know different vendor keys; if one key is 
+										cracked, all connected cores lose protection
+									\item Asymmetric: keys enrypted with EDAs public key; seperate versions for each 
+										tool, much time
+									\item Hybrid: cores encrypted symmetric, key encrypted with EDA pub key
+								\end{itemize}
+							\item Disadvantages
+								\begin{itemize}
+									\item Fixed constraints, restricted choice of tools
+									\item slower simulation, no re-use of cores
+								\end{itemize}
+						\end{itemize}
+					\item Encryption of FPGA file: bitstream decrypted inside the FPGA
+						\begin{itemize}
+							\item Bitfile stored in non-volatile memory (PROM) and tranferred encrypted
+							\item FPGA decrypts with a hard core before configuring
+							\item Key storage
+								\begin{itemize}
+									\item Volatile: low power SRAM with external battery (more comlicated attack, 
+										but more space and cost)
+									\item Non-Volatile: flash / EEPROM, no ext. device but needs latest CMOS with 
+										increased costs
+								\end{itemize}
+							\item Key Management
+								\begin{itemize}
+									\item Embedded Key: FPGA loads enc. bitfile from PROM and decrypts it at power on
+									\item Encrypted Partial Bitfiles: decryption done by a statically loaded soft 
+										core
+								\end{itemize}
+						\end{itemize}
+				\end{itemize}
+			\item Unique Identification of the Execution Site (active)
+				\begin{itemize}
+					\item Software / IP Core checks ID of board
+					\item Only executes or loads if ID is correct
+					\item Identification through USB Dongle, MAC or TPM
+					\item TPM: endorsement key in persistent memory can bind software to host
+					\item FPGA identification through external device, unique embedded key or physical unclonable function (PUF)
+					\item CPLD can store board key and crypto for challenge-response auth.
+					\item Unique keys (device DNA) in FPGAs
+					\item PUFs
+						\begin{itemize}
+							\item Returns unique value, extracted by physical properties
+							\item Silicon PUFs use manufacturing related delay variations
+							\item Categories
+								\begin{itemize} 
+									\item Ring oscillator: edge detection and counter
+									\item Arbiter: challenge vector is road through multiplexers, clock registers 
+										data bit 
+									\item RAM: during power up SRAM cells create pattern which can be used
+								\end{itemize}
+						\end{itemize}
+				\end{itemize}
+			\item Watermarking (reactive)
+				\begin{itemize}
+					\item Multimedia watermarking alters data slightly
+					\item IP watermarking must no alter user data (functionality)
+					\item Fingerprint is a watermark that is individual for each copy
+					\item Attacks
+						\begin{itemize}
+							\item Ambiguity attack: multiple watermarks in design
+							\item Removal attack
+							\item Copy attack: copying work without permission
+							\item Key copy attack: exchange watermark (signature)
+						\end{itemize}
+					\item Should be functional correct, easily verifiable, difficult to remove
+					\item Additive vs. constraint-based
+					\item Can be used for HDL, netlists, bitfiles
+					\item Additive
+						\begin{itemize}
+							\item Not embedded into functionality but can be masked
+							\item HDL: difficult because its human readable, stored in unused space or sent during testmodes
+							\item Bitfile: encoded into unused LUTs, location can be used as fingerprint, number of LUTs in 
+								2x2 tile or stored in unused multiplexers
+							\item Can be removed by searching for unusual connections
+						\end{itemize}
+					\item Constraint-based
+						\begin{itemize}
+							\item Optimization constraints characterize set of feasible solutions
+							\item Additional constraints for the syntheses tool as watermark
+							\item HDL: exploit scan chain, for DSP alter the result slightly
+							\item Netlists: restrict number of used inputs of LUTs, rewiring through redundant nets
+							\item Bitfile: placement (odd / even rows), routing, timing (split paths)
+							\item Layouts: number of vias and bends, size of repeaters
+						\end{itemize}
+					\item Constraints only work as is (not on another level, embedded or re-routed) and can be ambiguous
+				\end{itemize}
+			\item Watermark verification
+				\begin{itemize}
+					\item Temperature watermark (up to 15 minutes to verify)
+					\item Netlist identification
+						\begin{itemize}
+							\item Extraction of LUT content and checking if its a subset
+							\item Problem: further optimization might change LUT contents
+							\item Solution: Prevent optimization by e.g. converting LUTs into shift registers
+						\end{itemize}
+					\item Power Watermarking (netlist level)
+						\begin{itemize}
+							\item Measuring power consumption of the FPGA
+							\item Watermark ist produced by additional consumer (e.g. shift register)
+							\item Two shift registers: one for signature, (large) one as consumer
+							\item If curr. signature bit is 1, the large one gets shifted
+							\item Different Encoding Methods: basic, enhanced robustness, BPSK, correlation
+							\item Transfer rate up to 500 kbit/s
+							\item Signatures can also be multiplexed
+						\end{itemize}
+				\end{itemize}
+
 		\end{itemize}
 
 	\section{Non invasive physical attacks}
 		\begin{itemize}
-			\item 
+			\item Overview
+				\begin{itemize}
+					\item Eavesdropping: gathering sensitive information
+					\item Solution: (proper) Encryption
+					\item Side-Channel Attacks: attacker has control over power and clock lines
+					\item Active (inducing faults) vs. passive (only observe)
+				\end{itemize}
+			\item Timing Side-Channel Attacks
+				\begin{itemize}
+					\item E.g. strcmp execution time depends on number of matching chars
+					\item Measuring the longest execution time reveals the right digits
+					\item Software Data-Dependencies: no conditional branches that depend on secret data
+					\item DDs in Hardware: hardware (functional units or caches) can cause DDs
+					\item DDs of Functional Units
+						\begin{itemize}
+							\item Mostly in multiplication and division
+							\item Some use early termination depending on size of source
+							\item Div terminates earlier if dividend and divisor are similar size
+							\item Conditional branches take different amount of cycles
+							\item Load/Store take two for the first access then one for each additional
+						\end{itemize}
+					\item DDs caused by the cache
+						\begin{itemize}
+							\item Two consecutive lookups take less time if the same address is accessed
+							\item This can be used to gather secret information
+						\end{itemize}
+				\end{itemize}
+			\item Timing Attack on simple AES
+				\begin{itemize}
+					\item SubBytes usually implemented using lookup tables $\Rightarrow$ timing attack
+					\item MixColumns performs additional xor if MSB was set before shift $\Rightarrow$ timing attack
+					\item Attack Setting
+						\begin{itemize}
+							\item AES encrypts $D$ random data blocks
+							\item Attacker knows plaintexts and is able to observe overall timing for each encrypt
+							\item Each byte: xor with key, s-box, multiplied inside MixColumn
+							\item Depending on MSB of s-box output the encryption takes 1 cycle longer or not
+							\item Generate s-box bytes for every data-byte xor key-byte combination
+							\item For each key candidate calculate avg. 1 and 0 time and select the one with biggest diff.
+						\end{itemize}
+				\end{itemize}
+			\item Power Side-Channel Attacks
+				\begin{itemize}
+					\item CMOS consists of PMOS (low) and NMOS (high)
+					\item Gates consist of pull-up (PMOS) and pull-down (NMOS)
+					\item Leakage current is data-dependent
+					\item Short circuit current: when input switches both networks are conductive for a short time
+					\item Charging current: When output switches capacitance needs to be charged, leading to a higher data-dependent 
+						current
+					\item Setup needs a clock generator, measurement circuit and osciloscope
+					\item Measurement throught small resistor, current probe or electromagnetic probes
+					\item First step is to find interesting parts by visual inspection of the power trace
+					\item Attacker learns operation-dependent power consumption and thus sequence of instructions
+					\item Gross changes in power profile: cache hit/miss, memory access, peripherals (e.g. coprocessors)
+					\item Detection of repeated patterns and variations
+					\item Differential Power analysis on AES
+						\begin{itemize}
+							\item Measuring power consumption based on AES output
+							\item Each 1000 trace where MSB of byte 1 of cypher is 1 / 0
+							\item Calculate mean and difference between these values
+							\item Very effective against block ciphers like AES
+							\item Power consumption depends on intermediate values of crypto algs.
+							\item For every time instance and every key hyp. calculate difference between high and low means
+							\item Result is matrix of size \#hyps * length of trace
+							\item Only at the right time with right hyp. greater power differences are observable 
+								(max of matrix)
+						\end{itemize}
+					\item Countermeasures
+						\begin{itemize}
+							\item Switch key frequently (protocol level countermeasure)
+							\item Make power consumption independent of intermediate values (random or equal for each cycle)
+						\end{itemize}
+					\item Hiding
+						\begin{itemize}
+							\item Same calculations but reduction of data-dependent power consumption
+							\item Lowering signal-to-noise ratio (adding noise) increases number of needed measurements
+							\item Random delays add propability p of executing a command at a certain time; measurements 
+								increase with square of p
+							\item Choice of instructions, noise engines, dual-rail pre-charge
+						\end{itemize}
+					\item Masking
+						\begin{itemize}
+							\item Randomize intermediate values so the attacker cant exploit the leakage
+							\item Typically values are xored with random mask
+							\item Masked software / hardware implementation, masked logic styles
+						\end{itemize}
+				\end{itemize}
+			\item Fault Analysis
+				\begin{itemize}
+					\item Inducing faults through temperature, frequency, supply voltage, ...
+					\item Spike / Glitch Attacks: disturb power supply or I/O lines
+					\item Light Attacks: switching transistors with light; local with lasers or global
+					\item Countermeasure approaches: sensor-based (detect induction) vs. error-detection 
+					\item If attacker can precisely set bits he can set every key bit to 0 and check new result
+					\item Fault Attacks on AES
+						\begin{itemize}
+							\item Changing input of AddRoundKey with different fault models
+								\begin{enumerate}
+									\item attacker can toggle bits $\Rightarrow$ no info
+									\item set certain bits to certain values $\Rightarrow$ yes
+									\item set bits to unknown values $\Rightarrow$ no info
+								\end{enumerate}
+							\item Same for input of ShiftRows
+							\item Attacking input of SubByte with fault model 1 is possible
+								\begin{itemize}
+									\item Able to toggle LSB of s-box input
+									\item Generate pairs of correct and faulty encryptions for each plaintext
+									\item Check for all possible keybytes for which the s-box input only differs 
+										in the lsb
+								\end{itemize}
+						\end{itemize}
+				\end{itemize}
 		\end{itemize}
 
 	\section{Automotive case study}
 		\begin{itemize}
-			\item 
+			\item Current systems mainly focus on safety but not security
+			\item Constraints: weight, power consumption, cost, reliability
+			\item Confidentiality
+				\begin{itemize}
+					\item Disclosure of secret info (keys) / data
+					\item Access to system routines, information about the state of the system
+				\end{itemize}
+			\item Integrity
+				\begin{itemize}
+					\item Unauthorized Updates
+					\item Addition of deficient components
+					\item Manipulation of data and parameters
+				\end{itemize}
+			\item Availability
+				\begin{itemize}
+					\item Damage or deactivation of vehicle / routines
+					\item Disabling or overloading buses
+				\end{itemize}
+			\item Envolved entities
+				\begin{itemize}
+					\item Vehicle Owner: tuning or improving guarantee claims
+					\item Vehicle manufacturer: reverse engineering of competing products
+					\item Component manufacturer: spying other components or offer cloned products
+					\item Software provider: Trojans / Viruses
+					\item Workshop staff: inserting unsupported modules (tuning), obfuscate faults
+					\item Constitutional State: Provide Logs to identify guilty parties
+					\item Unknown third party: disclosure of sensitive data, stealing car, assault on occupants
+				\end{itemize}
+			\item Gateways
+				\begin{itemize}
+					\item Physical: On Board Diagnostic, USB / Memory Card, wiring (mirrors)
+					\item Non-physical: wireless interface, software update, appstores
+				\end{itemize}
+			\item Attacks on Communication Networks
+				\begin{itemize}
+					\item Physical: Disconnecting / eavesdropping of cables
+					\item Protocol Attacks: inserting / modifying / logging of bus messages, DOS
+					\item Network Topology Attack: creating new gateways by modifying ECUs that are connected to multiple buses, 
+						bypassing security functions
+				\end{itemize}
+			\item Protection against Code-Injection
+				\begin{itemize}
+					\item Additional return stack in hw / sw
+					\item Address obfuscation and software encryption
+					\item Secure programming languages
+					\item Static / dynamic code analyzer
+					\item Anomaly detection
+					\item Compiler / Library / OS Extensions
+				\end{itemize}
+			\item Security Zones
+				\begin{itemize}
+					\item Subdividing network in different zones with different trustworthiness
+					\item A Bus can only be assigned to a single zone
+					\item Encrypted channels and tunnels across bus boundaries
+					\item Highest rust zone uses encryption, authentication and secure gateways
+				\end{itemize}
+			\item Physical protection
+				\begin{itemize}
+					\item Make trustworthy networks hard to reach
+					\item Switch of bus segment if manipulation is detected
+					\item Implementation as System-on-Chip
+					\item Destruction of ECUs when opened
+				\end{itemize}
+			\item ECU authentication through (double) challenge-response
+			\item Authorization rules for each ECU (ignoring non authorized messages)
+			\item Intrusion detection
+				\begin{itemize}
+					\item Network protocol: additional nodes analyze traffic
+					\item Physical: measurement instruments
+					\item Deny access to sensitive data, disconnect bus segments, issue warning
+				\end{itemize}
+			\item Conservation of attacks evidence through Event Data Recorders (EDR)
 		\end{itemize}
 
 
